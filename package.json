@@ -1,6 +1,6 @@
 {
   "name": "ismetjs",
-  "version": "0.0.0",
+  "version": "0.0.0-development",
   "description": "A CLI tool to automatically generate and manage git remote repository issues from code comments.",
   "author": "Özgür Tanrıverdi (@otanriverdi)",
   "license": "MIT",
@@ -31,7 +31,8 @@
     "prettier": "prettier --ignore-path .gitignore \"**/*.(js|ts|json)\"",
     "check:format": "npm run prettier -- --list-different",
     "check:types": "tsc --noEmit",
-    "validate": "run-p check:types check:format lint build test"
+    "validate": "run-p check:types check:format lint build test",
+    "semantic-release": "semantic-release"
   },
   "keywords": [
     "issue",
@@ -66,6 +67,7 @@
     "nodemon": "^2.0.6",
     "npm-run-all": "^4.1.5",
     "prettier": "^2.1.2",
+    "semantic-release": "^17.2.2",
     "typescript": "^4.0.5"
   },
   "husky": {
@@ -87,5 +89,10 @@
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog"
     }
+  },
+  "release": {
+    "branches": [
+      "master"
+    ]
   }
 }

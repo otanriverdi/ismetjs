@@ -1,0 +1,22 @@
+sudo: false
+
+language: node_js
+node_js:
+  - 12
+
+notifications:
+  email: false
+
+script:
+  - npm run validate
+
+jobs:
+  include:
+    - stage: release
+      node_js: lts/*
+      script: skip
+      deploy:
+        provider: script
+        skip_cleanup: true
+        script:
+          - npx semantic-release
