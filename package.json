@@ -31,7 +31,8 @@
     "prettier": "prettier --ignore-path .gitignore \"**/*.(js|ts|json)\"",
     "check:format": "npm run prettier -- --list-different",
     "check:types": "tsc --noEmit",
-    "validate": "run-p check:types check:format lint build test:coverage"
+    "validate": "run-p check:types check:format lint build",
+    "ls": "lint-staged"
   },
   "keywords": [
     "issue",
@@ -75,8 +76,10 @@
   },
   "lint-staged": {
     "**/*.+(ts|json)": [
-      "prettier --write",
-      "jest --findRelatedTests --passWithNoTests"
+      "prettier --write"
+    ],
+    "*.ts": [
+      "jest --findRelatedTests"
     ]
   },
   "config": {
