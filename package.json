@@ -1,0 +1,87 @@
+{
+  "name": "ismetjs",
+  "version": "0.0.0",
+  "description": "A CLI tool to automatically generate and manage git remote repository issues from code comments.",
+  "author": "Özgür Tanrıverdi (@otanriverdi)",
+  "license": "MIT",
+  "bin": {
+    "ismet": "dist/bin/ismet.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/otanriverdi/ismetjs.git"
+  },
+  "bugs": {
+    "url": "https://github.com/otanriverdi/ismetjs/issues"
+  },
+  "homepage": "https://github.com/otanriverdi/ismetjs#readme",
+  "scripts": {
+    "setup": "npm install && npm run validate",
+    "link": "npm rm -g ismetjs && npm link",
+    "build": "npm run build:types && npm run build:js",
+    "build:types": "tsc --emitDeclarationOnly",
+    "build:js": "babel src --out-dir dist --extensions \".ts\" --source-maps inline",
+    "build:dev": "npm run build:js && npm run link",
+    "dev": "nodemon -e .ts --watch src --exec npm run build:dev --ignore src/test --ignore '**/__test__/**'",
+    "test": "is-ci test:coverage test:watch",
+    "test:coverage": "jest src --coverage --passWithNoTests",
+    "test:watch": "jest src --watch",
+    "test:debug": "node --inspect-brk ./node_modules/jest/bin/jest.js --runInBand",
+    "lint": "eslint --ignore-path .gitignore --ext .ts",
+    "prettier": "prettier --ignore-path .gitignore \"**/*.(js|ts|json)\"",
+    "check:format": "npm run prettier -- --list-different",
+    "check:types": "tsc --noEmit",
+    "validate": "run-p check:types check:format lint build test:coverage"
+  },
+  "keywords": [
+    "issue",
+    "remote",
+    "comment",
+    "generator",
+    "repo",
+    "automation",
+    "git",
+    "pre-commit"
+  ],
+  "devDependencies": {
+    "@babel/cli": "^7.12.1",
+    "@babel/core": "^7.12.3",
+    "@babel/plugin-proposal-class-properties": "^7.12.1",
+    "@babel/preset-env": "^7.12.1",
+    "@babel/preset-typescript": "^7.12.1",
+    "@types/jest": "^26.0.15",
+    "@typescript-eslint/eslint-plugin": "^4.6.1",
+    "@typescript-eslint/parser": "^4.6.1",
+    "babel-jest": "^26.6.3",
+    "babel-plugin-module-resolver": "^4.0.0",
+    "cz-conventional-changelog": "^3.3.0",
+    "eslint": "^7.13.0",
+    "eslint-config-prettier": "^6.15.0",
+    "eslint-plugin-jest": "^24.1.0",
+    "husky": "^4.3.0",
+    "is-ci-cli": "^2.1.2",
+    "jest": "^26.6.3",
+    "jest-watch-typeahead": "^0.6.1",
+    "lint-staged": "^10.5.1",
+    "nodemon": "^2.0.6",
+    "npm-run-all": "^4.1.5",
+    "prettier": "^2.1.2",
+    "typescript": "^4.0.5"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged && npm run validate"
+    }
+  },
+  "lint-staged": {
+    "**/*.+(ts|json)": [
+      "prettier --write",
+      "jest --findRelatedTests --passWithNoTests"
+    ]
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  }
+}
