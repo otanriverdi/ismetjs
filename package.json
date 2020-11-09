@@ -31,8 +31,7 @@
     "prettier": "prettier --ignore-path .gitignore \"**/*.(js|ts|json)\"",
     "check:format": "npm run prettier -- --list-different",
     "check:types": "tsc --noEmit",
-    "validate": "run-p check:types check:format lint build",
-    "ls": "lint-staged"
+    "validate": "run-p check:types check:format lint build test"
   },
   "keywords": [
     "issue",
@@ -71,7 +70,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged && npm run validate"
+      "pre-commit": "lint-staged && npm run build"
     }
   },
   "lint-staged": {
@@ -79,7 +78,9 @@
       "prettier --write"
     ],
     "*.ts": [
-      "jest --findRelatedTests"
+      "jest --findRelatedTests",
+      "npm run lint",
+      "npm run check:types"
     ]
   },
   "config": {
