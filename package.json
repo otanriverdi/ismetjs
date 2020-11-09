@@ -18,7 +18,7 @@
   "scripts": {
     "setup": "npm install && npm run validate",
     "link": "npm rm -g ismetjs && npm link",
-    "build": "npm run build:types && npm run build:js",
+    "build": "run-p build:types build:js",
     "build:types": "tsc --emitDeclarationOnly",
     "build:js": "babel src --out-dir dist --extensions \".ts\" --source-maps inline",
     "build:dev": "npm run build:js && npm run link",
