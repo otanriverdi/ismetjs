@@ -8,7 +8,7 @@ describe('Parser', () => {
   beforeAll(() => {
     return new Promise(res => {
       fs.readFile(
-        path.join(__dirname, '../../test/to-parse.js'),
+        path.join(__dirname, '../../test/to-parse/to-parse.js'),
         'utf-8',
         (_, data) => {
           input = data;
@@ -51,12 +51,24 @@ describe('Parser', () => {
 
   it('should silently return an empty array if input JS throws an error', () => {
     fs.readFile(
-      path.join(__dirname, '../../test/to-parse-error.js'),
+      path.join(__dirname, '../../test/to-parse/to-parse-error.js'),
       'utf-8',
       (err, data) => {
         const res = parse(data);
 
         expect(res.length).toBe(0);
+      },
+    );
+  });
+
+  it('should handle both commonjs and ES modules', () => {
+    fs.readFile(
+      path.join(__dirname, '../../test/to-parse/to-parse-modules.js'),
+      'utf-8',
+      (err, data) => {
+        const res = parse(data);
+
+        expect(res.length).toBe(1);
       },
     );
   });

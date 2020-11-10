@@ -11,6 +11,7 @@ import config from 'config';
 export default function (input: string, onComment: Options['onComment']): void {
   const ecmaVersion = config.ecmaVersion;
   parse(input, {
+    sourceType: 'module', // handles both commonjs and ES modules
     ecmaVersion,
     onComment,
   });
