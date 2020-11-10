@@ -1,7 +1,8 @@
 #! /usr/bin/env node
 // The above directive is mandatory for CLI entry points
 
-import {validators} from 'cli';
+import fs from 'fs';
+import {exit} from 'helpers';
 import meow from 'meow';
 import path from 'path';
 
@@ -22,10 +23,16 @@ const cli = meow(
 
 // main entry point
 (function () {
-  validators.input(cli.input);
+  const {input} = cli;
+  let directory = input[0];
 
-  const directory = cli.input[0];
+  if (!directory) directory = '.';
 
-  // eslint-disable-next-line
-  console.log('Hello,', path.join(process.cwd(), directory));
+  if (input.length > 1) {
+    exit('Invalid usage. Run `ismet --help` to see usage examples.', 1);
+  }
+
+  if (!fs.existsSync(path.join(process.cwd(), directory))) {
+    exit('Directory not found.', 1);
+  }
 })();
