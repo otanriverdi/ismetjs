@@ -20,4 +20,5 @@
 
 <br>
 
+<p align="center">🐙</p>
 <p align="center"><b>>_ A CLI tool to automatically generate and manage git repo issues from code comments.</b></p>
