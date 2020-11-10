@@ -1,7 +1,7 @@
 <h1 align="center">Ismet</h1>
 
 <p align="center">
-  <a href="https://npmjs.org/package/enquirer">
+  <a href="https://npmjs.org/package/ismetjs">
     <img src="https://img.shields.io/npm/v/enquirer.svg" alt="version">
   </a>
   <a href="https://travis-ci.org/otanriverdi/ismetjs">
