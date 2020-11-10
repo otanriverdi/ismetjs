@@ -8,6 +8,9 @@ notifications:
 script:
   - npm run validate
 
+after_script:
+  - bash <(curl -s https://codecov.io/bash)
+
 jobs:
   include:
     - stage: release
