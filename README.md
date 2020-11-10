@@ -2,7 +2,7 @@
 
 <p align="center">
   <a href="https://npmjs.org/package/ismetjs">
-    <img src="https://img.shields.io/npm/v/enquirer.svg" alt="version">
+    <img src="https://img.shields.io/npm/v/ismetjs" alt="version">
   </a>
   <a href="https://travis-ci.org/otanriverdi/ismetjs">
     <img src="https://travis-ci.org/otanriverdi/ismetjs.svg?branch=master" alt="travis">
