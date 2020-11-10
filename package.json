@@ -72,7 +72,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged && npm run build"
+      "pre-commit": "npm run check:types && lint-staged && npm run build"
     }
   },
   "lint-staged": {
@@ -81,8 +81,7 @@
     ],
     "*.ts": [
       "jest --findRelatedTests",
-      "npm run lint",
-      "npm run check:types"
+      "npm run lint"
     ]
   },
   "config": {
