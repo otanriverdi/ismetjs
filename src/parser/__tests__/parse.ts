@@ -1,7 +1,7 @@
 import {readAndParse} from 'test/utils';
 import parse from '../parse';
 
-describe('parse()', () => {
+describe('parseComments()', () => {
   let input: string;
 
   beforeAll(() => {
