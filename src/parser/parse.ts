@@ -2,7 +2,7 @@ import config from 'config';
 import acorn from './acorn';
 
 /**
- * Parses the provided JS input and returns all comments with an Ismet directive.
+ * Parses the provided JS input and returns all comments with an `ismet` directive.
  * Directive string will be removed. If the JS file throws an error, it will return an empty array.
  *
  * @param {string} input
