@@ -5,4 +5,4 @@ const foo = () => {
 
 export default foo;
 
-// $(ismet) 1
+// $(ismet) test

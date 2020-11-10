@@ -4,4 +4,5 @@ import {Options} from 'acorn';
 export default class Constants {
   ecmaVersion: Options['ecmaVersion'] = 'latest';
   directive = '$(ismet)';
+  acceptedExtensions = ['js', 'jsx'];
 }
