@@ -1,4 +1,6 @@
+import {Options} from 'acorn';
+
 /** Holds constant configuration settings.*/
 export default class Constants {
-  ecmaVersion = 'latest';
+  ecmaVersion: Options['ecmaVersion'] = 'latest';
 }
