@@ -5,4 +5,5 @@ export default class Constants {
   ecmaVersion: Options['ecmaVersion'] = 'latest';
   directive = '$(ismet)';
   acceptedExtensions = ['js', 'jsx'];
+  ghClientID = 'ec5084fcd83b641e208e';
 }

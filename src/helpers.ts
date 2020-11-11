@@ -39,6 +39,7 @@ export async function load(
   const spinner = ora(message).start();
 
   try {
+    // we expose the spinner to the action in case the message needs to be updated
     const results = await action(spinner);
 
     spinner.succeed();

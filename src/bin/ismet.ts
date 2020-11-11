@@ -1,6 +1,7 @@
 #! /usr/bin/env node
 // The above directive is mandatory for CLI entry points
 
+import authenticate from 'auth';
 import chalk from 'chalk';
 import {exit, load} from 'helpers';
 import meow from 'meow';
@@ -48,5 +49,7 @@ const cli = meow(
     exit(`Found no issues`, 0);
   }
 
-  exit(`Found ${comments.length} issues`, 0);
+  const code = await load(async () => await authenticate(), 'Authenticating');
+
+  exit(`Found ${comments.length} issues and the code is ${code}`, 0);
 })();
