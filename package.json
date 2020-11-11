@@ -32,7 +32,8 @@
     "check:format": "npm run prettier -- --list-different",
     "check:types": "tsc --noEmit",
     "validate": "run-p check:format lint build test",
-    "semantic-release": "semantic-release"
+    "semantic-release": "semantic-release",
+    "deploy:firebase": "cd functions && npm run build && npm run deploy"
   },
   "keywords": [
     "issue",

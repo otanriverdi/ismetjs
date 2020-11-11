@@ -5,9 +5,7 @@ import bodyParser from 'koa-bodyparser';
 import helmet from 'koa-helmet';
 import {AddressInfo} from 'net';
 
-const {ghClientID, store} = config;
-
-const secret = 'DEAL WITH IT';
+const {store} = config;
 
 /**
  * Starts the `koa` server, returns the port and listens for a request from Github. Executes the callback
@@ -31,14 +29,9 @@ export default function startServer(
     const {code, state} = ctx.request.query;
 
     if (code && state === id) {
-      const response = await axios.post(
-        `https://github.com/login/oauth/access_token?client_id=${ghClientID}&client_secret=${secret}&code=${code}`,
-        null,
-        {
-          headers: {
-            Accept: 'application/json',
-          },
-        },
+      // see functions/README.md to understand why we don't make a request to Github API
+      const response = await axios.get(
+        `https://us-central1-ismetjs.cloudfunctions.net/token?code=${code}`,
       );
 
       const {access_token} = response.data;
