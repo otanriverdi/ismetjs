@@ -19,7 +19,7 @@
     "setup": "npm install && npm run validate",
     "link": "npm rm -g ismetjs && npm link",
     "build": "babel src --out-dir dist --extensions \".ts\" --source-maps inline",
-    "build:dev": "npm run build:js && npm run link",
+    "build:dev": "npm run build && npm run link",
     "dev": "nodemon -e .ts --watch src --exec npm run build:dev --ignore src/test --ignore '**/__test__/**'",
     "test": "is-ci test:coverage test:watch",
     "test:coverage": "jest src --coverage --passWithNoTests",

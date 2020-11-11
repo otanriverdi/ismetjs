@@ -44,6 +44,9 @@ export default function startServer(
         // the server needs to close as soon as we have the auth token.
         server.close();
 
+        // clear the timeout timer
+        clearTimeout(timer);
+
         return callback(access_token);
       }
     }
@@ -54,6 +57,13 @@ export default function startServer(
   });
 
   const server = app.listen(0);
+
+  // server times out after 3 minutes.
+  const timer = setTimeout(() => {
+    server.close();
+
+    throw new Error('Timeout on authentication reached.');
+  }, 180000);
 
   return (<AddressInfo>server.address()).port;
 }
