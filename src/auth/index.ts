@@ -1,9 +1,12 @@
-import ghOAuth from './github-oauth';
+import config from 'config';
+import ghOAuth from './gh-oauth';
 
-export default async function () {
-  // check if the user is already logged in,
-  // if not
-  return await ghOAuth();
-
-  // return the user
+/**
+ * Checks the local store for an existing access token for this directory and starts the OAuth flow if the
+ * token doesn't exist.
+ */
+export async function authenticate(): Promise<void> {
+  if (!config.store.getAuthToken()) {
+    await ghOAuth();
+  }
 }
