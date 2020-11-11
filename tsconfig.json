@@ -11,5 +11,6 @@
     "strict": true,
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true
-  }
+  },
+  "exclude": ["functions"]
 }
