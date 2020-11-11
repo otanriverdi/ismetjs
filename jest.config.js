@@ -5,7 +5,7 @@ const path = require('path');
 module.exports = {
   testEnvironment: 'jest-environment-node',
   moduleDirectories: ['node_modules', path.join(__dirname, 'src')],
-  collectCoverageFrom: ['**/src/**/*.ts'],
+  collectCoverageFrom: ['src/**/*.ts'],
   watchPlugins: [
     'jest-watch-typeahead/filename',
     'jest-watch-typeahead/testname',
