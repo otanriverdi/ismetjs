@@ -13,11 +13,13 @@ const {acceptedExtensions} = config;
  * @returns {Promise<string[]>} comments[]
  */
 export default async function (fullPath: string): Promise<string[]> {
-  return await new Promise((resolve, reject) => {
+  return new Promise((resolve, reject) => {
     let comments: string[] = [];
 
     fs.readdir(fullPath, {encoding: 'utf-8'}, (error, files) => {
-      if (error) reject(error);
+      if (error) {
+        return reject(error);
+      }
 
       files.forEach(file => {
         // checks if the file extension is included inside the allowed extensions configuration
@@ -30,7 +32,7 @@ export default async function (fullPath: string): Promise<string[]> {
         }
       });
 
-      resolve(comments);
+      return resolve(comments);
     });
   });
 }
