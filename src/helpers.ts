@@ -33,13 +33,13 @@ export function exit(message: string, code = 0): void {
  * @param {string} message
  */
 export async function load(
-  action: () => Promise<unknown>,
+  action: (spinner: ora.Ora) => Promise<unknown>,
   message: string,
 ): Promise<unknown> {
   const spinner = ora(message).start();
 
   try {
-    const results = await action();
+    const results = await action(spinner);
 
     spinner.succeed();
 
