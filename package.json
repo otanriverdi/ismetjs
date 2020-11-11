@@ -98,6 +98,7 @@
   "dependencies": {
     "acorn": "^8.0.4",
     "acorn-jsx": "^5.3.1",
+    "chalk": "^4.1.0",
     "meow": "^8.0.0",
     "ora": "^5.1.0"
   }
