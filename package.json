@@ -51,6 +51,7 @@
     "@babel/preset-env": "^7.12.1",
     "@babel/preset-typescript": "^7.12.1",
     "@types/acorn": "^4.0.5",
+    "@types/axios": "^0.14.0",
     "@types/jest": "^26.0.15",
     "@types/koa": "^2.11.6",
     "@types/koa-bodyparser": "^4.3.0",
@@ -101,6 +102,7 @@
   "dependencies": {
     "acorn": "^8.0.4",
     "acorn-jsx": "^5.3.1",
+    "axios": "^0.21.0",
     "chalk": "^4.1.0",
     "koa": "^2.13.0",
     "koa-bodyparser": "^4.3.0",

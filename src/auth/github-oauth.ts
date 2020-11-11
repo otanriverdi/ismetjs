@@ -1,3 +1,4 @@
+import axios from 'axios';
 import config from 'config';
 import Koa from 'koa';
 import bodyParser from 'koa-bodyparser';
@@ -10,6 +11,8 @@ const {ghClientID} = config;
 const app = new Koa();
 app.use(bodyParser());
 
+const secret = 'FIGURE THIS OUT';
+
 export default async function () {
   return new Promise((resolve, reject) => {
     const id = uuidv4();
@@ -19,11 +22,23 @@ export default async function () {
 
       if (code && state === id) {
         ctx.body = '🐙 Done! Go back to your terminal';
-        server.close();
-        resolve(code);
-      }
 
-      reject(new Error('Invalid state on redirect.'));
+        const response = await axios.post(
+          `https://github.com/login/oauth/access_token?client_id=${ghClientID}&client_secret=${secret}&code=${code}`,
+          null,
+          {
+            headers: {
+              Accept: 'application/json',
+            },
+          },
+        );
+
+        server.close();
+
+        resolve(response.data.access_token);
+      } else {
+        reject(new Error('Invalid state on redirect.'));
+      }
     });
 
     const server = app.listen(0);
