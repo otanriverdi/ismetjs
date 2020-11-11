@@ -15,7 +15,6 @@ jobs:
   include:
     - stage: release
       node_js: lts/*
-      script: skip
       deploy:
         provider: script
         script:
