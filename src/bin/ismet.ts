@@ -1,7 +1,7 @@
 #! /usr/bin/env node
 // The above directive is mandatory for CLI entry points
 
-import {authenticate} from 'auth';
+import {authenticate, logout} from 'auth';
 import chalk from 'chalk';
 import config from 'config';
 import {exit, load} from 'helpers';
@@ -12,7 +12,10 @@ import path from 'path';
 const cli = meow(
   `
 	Usage
-	  $ ismet <directory>
+    $ ismet <directory>
+  
+  Options
+    --logout, -l Logout from Github
 
   Examples
 	  $ ismet
@@ -21,11 +24,22 @@ const cli = meow(
   {
     description:
       '🐙 Automatically generates and manages git repo issues from code comments. ',
+    flags: {
+      logout: {
+        type: 'boolean',
+      },
+    },
   },
 );
 
 // main entry point
 (async function () {
+  if (cli.flags.logout) {
+    logout();
+
+    exit('Logged out', 0);
+  }
+
   // welcome message
   // eslint-disable-next-line
   console.log('🐙 Running', chalk.bold.underline('ismet'), '\n');
