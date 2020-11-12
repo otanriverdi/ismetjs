@@ -19,11 +19,11 @@ const cli = meow(
 
   Examples
 	  $ ismet
-	  🐙 your issues will be created 🐙
+    🐙 your issues will be created 🐙
 `,
   {
     description:
-      '🐙 Automatically generates and manages git repo issues from code comments. ',
+      '🐙 Automatically generates and manages git repo issues from code comments. Ignores files in `.gitignore`.',
     flags: {
       logout: {
         type: 'boolean',
