@@ -6,7 +6,14 @@ import ghOAuth from './gh-oauth';
  * token doesn't exist.
  */
 export async function authenticate(): Promise<void> {
-  if (!config.store.getAuthToken()) {
+  if (!config.store.getAccessToken()) {
     await ghOAuth();
   }
+}
+
+/**
+ * Logs the user out by deleting their saved info.
+ */
+export function logout(): void {
+  config.store.deleteAccessToken();
 }

@@ -11,7 +11,7 @@ export default class Store {
   private confId = process.cwd();
 
   /**
-   * Saves the auth token to the store..
+   * Saves the access token to the store..
    *
    * @param {string} token
    */
@@ -20,9 +20,16 @@ export default class Store {
   }
 
   /**
-   * Gets the auth token saved inside the store.
+   * Gets the access token saved inside the store.
    */
-  getAuthToken(): string {
+  getAccessToken(): string {
     return this.conf.get(`${this.confId}.access_token`) as string;
+  }
+
+  /**
+   * Deletes the access token saved inside the store.
+   */
+  deleteAccessToken(): void {
+    this.conf.delete(`${this.confId}.access_token`);
   }
 }

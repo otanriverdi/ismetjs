@@ -52,7 +52,7 @@ const cli = meow(
 
   await load(async () => await authenticate(), 'Authenticating');
 
-  const token = config.store.getAuthToken();
+  const token = config.store.getAccessToken();
 
   exit(`Found ${comments.length} issues and the token is ${token}`, 0);
 })();
