@@ -17,7 +17,7 @@ const {store} = config;
 export default function startServer(
   id: string,
   callback: (token: string) => unknown,
-): number {
+): {port: number; app: Koa} {
   // the koa app will start listening on a free port and the address of the app will be
   // sent to Github as the redirect URI.
   const app = new Koa();
@@ -73,5 +73,5 @@ export default function startServer(
     throw new Error('Timeout on authentication reached.');
   }, 180000);
 
-  return (<AddressInfo>server.address()).port;
+  return {port: (<AddressInfo>server.address()).port, app};
 }

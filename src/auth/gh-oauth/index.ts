@@ -13,7 +13,7 @@ export default async function (): Promise<void> {
   return new Promise(resolve => {
     const id = uuidv4();
 
-    const port = startServer(id, token => {
+    const {port} = startServer(id, token => {
       store.setAccessToken(token);
 
       resolve();
