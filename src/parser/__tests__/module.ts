@@ -12,7 +12,7 @@ describe('Parser', () => {
 
   test('should parse the directory and retrieve `ismet` comments', () => {
     expect(results.length).toBe(6);
-    expect(results[3]).toBe('2');
+    expect(results[3]).toBe('4');
   });
 
   test('should reject with errors', async () => {

@@ -6,7 +6,7 @@ describe('parseComments()', () => {
 
   beforeAll(() => {
     return new Promise(res => {
-      readAndParse('../../test/to-parse/to-parse.js', data => {
+      readAndParse('../../test/to-parse/sub/to-parse.js', data => {
         input = data;
         res();
       });
