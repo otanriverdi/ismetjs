@@ -2,11 +2,15 @@ import {authenticate, logout} from 'auth';
 import config from 'config';
 import * as ghOauth from '../gh-oauth';
 
-jest.mock('../gh-oauth');
-
 describe('authenticate()', () => {
-  const oauthSpy = jest.spyOn(ghOauth, 'default');
-  const configSpy = jest.spyOn(config.store, 'getAccessToken');
+  const oauthSpy = jest
+    .spyOn(ghOauth, 'default')
+    .mockImplementation(async () => {
+      return;
+    });
+  const configSpy = jest
+    .spyOn(config.store, 'getAccessToken')
+    .mockImplementation(() => 'a');
 
   test('should do nothing if there is an existing token', async () => {
     await authenticate();
