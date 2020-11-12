@@ -77,3 +77,8 @@ export async function flag(
 
   delete cli.flags[name];
 }
+
+export function welcome(): void {
+  // eslint-disable-next-line
+  console.log('🐙 Running', chalk.bold.underline('ismet'), '\n');
+}

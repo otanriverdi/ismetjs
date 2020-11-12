@@ -2,12 +2,12 @@
 // The above directive is mandatory for CLI entry points
 
 import {authenticate, logout} from 'auth';
-import chalk from 'chalk';
 import config from 'config';
-import {exit, flag, load} from 'helpers';
+import * as helpers from 'helpers';
 import meow from 'meow';
 import parse from 'parser';
 import path from 'path';
+import * as validators from 'validators';
 
 const cli = meow(
   `
@@ -34,40 +34,33 @@ const cli = meow(
 
 // main entry point
 (async function () {
-  flag(cli, 'logout', () => {
+  helpers.welcome();
+
+  helpers.flag(cli, 'logout', () => {
     logout();
-    exit('Logged out', 0);
+    helpers.exit('Logged out', 0);
   });
 
-  // ALL FLAGS MUST BE HANDLED BEFORE THIS LINE
-
-  // welcome message
-  // eslint-disable-next-line
-  console.log('🐙 Running', chalk.bold.underline('ismet'), '\n');
-
-  // only accepts a single non-flag input
-  const {input} = cli;
-  if (input.length > 1 || Object.keys(cli.flags).length > 0) {
-    exit('Invalid usage. Run `ismet --help` to see usage examples.', 1);
-  }
+  // ALL FLAGS MUST BE HANDLED BEFORE CALLING CHECK USAGE
+  validators.checkGit();
+  validators.checkUsage(cli);
 
   // if no dir is passed as an input, we use the current directory
-  const directory = input[0] || '.';
-
+  const directory = cli.input[0] || '.';
   const fullPath = path.join(process.cwd(), directory);
 
   // getting comments before auth because we don't want to bother the user
   // until we have issues to create
-  const comments = (await load(async () => {
+  const comments = (await helpers.load(async () => {
     return await parse(fullPath);
   }, `Parsing '${directory}' for issues`)) as string[];
   if (!comments.length) {
-    exit(`Found no issues`, 0);
+    helpers.exit(`Found no issues`, 0);
   }
 
-  await load(async () => await authenticate(), 'Authenticating');
+  await helpers.load(async () => await authenticate(), 'Authenticating');
 
   const token = config.store.getAccessToken();
 
-  exit(`Found ${comments.length} issues and the token is ${token}`, 0);
+  helpers.exit(`Found ${comments.length} issues and the token is ${token}`, 0);
 })();
