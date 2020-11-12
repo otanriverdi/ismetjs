@@ -4,6 +4,7 @@
 import {authenticate, logout} from 'auth';
 import config from 'config';
 import * as helpers from 'helpers';
+import generateIssues from 'issues';
 import meow from 'meow';
 import parse from 'parser';
 import path from 'path';
@@ -35,7 +36,6 @@ const cli = meow(
 // main entry point
 (async function () {
   helpers.welcome();
-
   helpers.flag(cli, 'logout', () => {
     logout();
     helpers.exit('Logged out', 0);
@@ -62,5 +62,13 @@ const cli = meow(
 
   const token = config.store.getAccessToken();
 
-  helpers.exit(`Found ${comments.length} issues and the token is ${token}`, 0);
+  const repo = await helpers.load(
+    async () => await generateIssues(),
+    'Generating issues',
+  );
+
+  helpers.exit(
+    `Found ${comments.length} issues, the token is ${token} and the repo is ${repo}`,
+    0,
+  );
 })();
