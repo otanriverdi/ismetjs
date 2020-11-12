@@ -1,7 +1,7 @@
 import execa from 'execa';
 
 /**
- * Gets the origin of the `git` repo on the cwd.
+ * Gets the `git` origin of the repo of the cwd.
  */
 export async function getOrigin(): Promise<string> {
   const {stdout} = await execa('git', ['config', '--get', 'remote.origin.url']);

@@ -2,7 +2,6 @@
 // The above directive is mandatory for CLI entry points
 
 import {authenticate, logout} from 'auth';
-import config from 'config';
 import * as helpers from 'helpers';
 import generateIssues from 'issues';
 import meow from 'meow';
@@ -60,15 +59,11 @@ const cli = meow(
 
   await helpers.load(async () => await authenticate(), 'Authenticating');
 
-  const token = config.store.getAccessToken();
-
-  const repo = await helpers.load(
+  const created = await helpers.load(
     async () => await generateIssues(),
-    'Generating issues',
+    'Creating issues',
   );
 
-  helpers.exit(
-    `Found ${comments.length} issues, the token is ${token} and the repo is ${repo}`,
-    0,
-  );
+  // TODO replace with created
+  helpers.exit(`Created ${created} issues.`, 0);
 })();
