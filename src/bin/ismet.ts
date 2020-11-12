@@ -4,7 +4,7 @@
 import {authenticate, logout} from 'auth';
 import chalk from 'chalk';
 import config from 'config';
-import {exit, load} from 'helpers';
+import {exit, flag, load} from 'helpers';
 import meow from 'meow';
 import parse from 'parser';
 import path from 'path';
@@ -34,14 +34,12 @@ const cli = meow(
 
 // main entry point
 (async function () {
-  if (cli.flags.logout) {
+  flag(cli, 'logout', () => {
     logout();
-
     exit('Logged out', 0);
-  }
-  // we delete the used flag because later we check if there is any left
-  // to validate proper usage
-  delete cli.flags.logout;
+  });
+
+  // ALL FLAGS MUST BE HANDLED BEFORE THIS LINE
 
   // welcome message
   // eslint-disable-next-line

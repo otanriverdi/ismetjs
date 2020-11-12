@@ -1,6 +1,7 @@
 // CLI helpers
 
 import chalk from 'chalk';
+import meow from 'meow';
 import ora from 'ora';
 
 /**
@@ -55,4 +56,24 @@ export async function load(
 
     exit('Failure. Check the error log for more details', 1);
   }
+}
+
+/**
+ * Executes the callback if the flag exists and then deletes the flag. It's getting deleted so that the usage
+ * validation can check if there are any flags remaining. Can be awaited if the callback is async.
+ *
+ * @param {meow.Result<any>} cli
+ * @param {string} name
+ * @callback callback
+ */
+export async function flag(
+  cli: meow.Result<any>,
+  name: string,
+  callback: () => any,
+): Promise<void> {
+  if (cli.flags[name]) {
+    await callback();
+  }
+
+  delete cli.flags[name];
 }
