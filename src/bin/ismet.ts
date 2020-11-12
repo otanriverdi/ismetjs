@@ -39,6 +39,9 @@ const cli = meow(
 
     exit('Logged out', 0);
   }
+  // we delete the used flag because later we check if there is any left
+  // to validate proper usage
+  delete cli.flags.logout;
 
   // welcome message
   // eslint-disable-next-line
@@ -46,7 +49,7 @@ const cli = meow(
 
   // only accepts a single non-flag input
   const {input} = cli;
-  if (input.length > 1) {
+  if (input.length > 1 || Object.keys(cli.flags).length > 0) {
     exit('Invalid usage. Run `ismet --help` to see usage examples.', 1);
   }
 
