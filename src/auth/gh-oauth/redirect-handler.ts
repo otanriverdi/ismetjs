@@ -9,7 +9,7 @@ const {store} = config;
  * makes the final post request to get the access token. Calls the `onSuccess` callback with the token and calls
  * the `onEnd` callback when the execution end even if it errors.
  *
- * @param {string} id state that was sent
+ * @param id state that was sent
  * @callback onSuccess will be called with token
  * @callback onEnd will be called once the execution ends
  */

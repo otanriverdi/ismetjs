@@ -20,8 +20,8 @@ export async function getOrigin(): Promise<string> {
  * Compares existing issues and comments to determine which comments should be created as issues
  * and which existing issues should be deleted because they are no longer inside the code.
  *
- * @param {string[]} comments
- * @param {any[]} existing existing issues
+ * @param comments
+ * @param existing existing issues
  */
 export function getOperations(
   comments: string[],

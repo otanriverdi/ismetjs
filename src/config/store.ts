@@ -10,7 +10,7 @@ export default class Store {
   /**
    * Saves the access token to the store..
    *
-   * @param {string} token
+   * @param token
    */
   setAccessToken(token: string): void {
     this.conf.set(`access_token`, token);

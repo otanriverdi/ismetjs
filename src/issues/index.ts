@@ -5,10 +5,10 @@ import {getOperations, getOrigin} from './helpers';
  * Creates issues from comments that are not already created. By default, also closes issues that does not have
  * their comments in the code anymore.
  *
- * @param {string[]} comments
- * @param {boolean} clean
+ * @param comments
+ * @param clean
  */
-export default async function (
+export default async function createIssues(
   comments: string[],
   clean = true,
 ): Promise<number> {

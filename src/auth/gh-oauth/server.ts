@@ -10,7 +10,7 @@ import createHandler from './redirect-handler';
  * callback once the access token is received. The passed in ID will be compared by the handler to the response
  * to secure the process. Server times out after 3 minutes.
  *
- * @param {string} id uuid
+ * @param id uuid
  * @callback onSuccess
  */
 export default function startServer(

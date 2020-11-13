@@ -2,6 +2,8 @@ import axios from 'axios';
 import config from 'config';
 import {Issue, Repo} from './types';
 
+const {store, ghApiURL} = config;
+
 /**
  * Class to interface with the Github API.
  */
@@ -10,7 +12,7 @@ class GithubApiClient {
   client;
 
   constructor() {
-    this.token = config.store.getAccessToken();
+    this.token = store.getAccessToken();
 
     if (!this.token) {
       throw new Error('Access token not found');
@@ -21,7 +23,7 @@ class GithubApiClient {
         Authorization: `token ${this.token}`,
         Accept: 'application/vnd.github.v3+json',
       },
-      baseURL: 'https://api.github.com',
+      baseURL: ghApiURL,
     });
   }
 
