@@ -1,5 +1,5 @@
 export type Issue = {
-  id: number;
+  number: number;
   title: string;
   state: 'open' | 'closed';
   labels: string[];

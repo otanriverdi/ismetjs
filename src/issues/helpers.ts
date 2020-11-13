@@ -37,11 +37,11 @@ export function getOperations(
 
   const toOpen = closedIssues
     .filter(issue => comments.includes(issue.title))
-    .map(i => i.id);
+    .map(i => i.number);
 
   const toClose: number[] | undefined = openIssues
     .filter(issue => !comments.includes(issue.title))
-    .map(i => i.id);
+    .map(i => i.number);
 
-  return {toCreate, toOpen, toClose};
+  return {toCreate: Array.from(new Set([...toCreate])), toOpen, toClose};
 }

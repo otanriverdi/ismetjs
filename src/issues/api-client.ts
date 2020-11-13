@@ -33,9 +33,9 @@ class GithubApiClient {
    * @returns repos
    */
   async getUserRepos(): Promise<Repo[]> {
-    const results = await this.client.get(`/user/repos`);
+    const results = await this.client.get<Repo[]>(`/user/repos`);
 
-    return results.data as Repo[];
+    return results.data;
   }
 
   /**
@@ -45,11 +45,39 @@ class GithubApiClient {
    * @returns issues
    */
   async getIssues(repo: string): Promise<Issue[]> {
-    const results = await this.client.get(
+    const results = await this.client.get<Issue[]>(
       `/repos/${repo}/issues?labels=ismet&state=all`,
     );
 
-    return results.data as Issue[];
+    return results.data;
+  }
+
+  /**
+   * Create issue with the label `ismet` on the provided repo.
+   *
+   * @param title
+   * @param repo
+   */
+  async createIssue(title: string, repo: string): Promise<void> {
+    await this.client.post(`/repos/${repo}/issues`, {
+      title,
+      labels: ['ismet'],
+    });
+  }
+
+  /**
+   * Toggles the issue on the provided repo.
+   *
+   * @param number number of the issue on github
+   * @param state
+   * @param repo
+   */
+  async toggleIssue(
+    number: number,
+    state: 'open' | 'closed',
+    repo: string,
+  ): Promise<void> {
+    await this.client.patch(`/repos/${repo}/issues/${number}`, {state});
   }
 }
 

@@ -45,8 +45,8 @@ describe('getOperations()', () => {
     operations = getOperations(
       ['1', '2'],
       [
-        {title: 'a', state: 'open', id: 1, labels: []},
-        {title: '1', state: 'closed', id: 2, labels: []},
+        {title: 'a', state: 'open', number: 1, labels: []},
+        {title: '1', state: 'closed', number: 2, labels: []},
       ],
     );
   });

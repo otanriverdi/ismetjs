@@ -3,7 +3,8 @@ import {getOperations, getOrigin} from './helpers';
 
 /**
  * Creates issues from comments that are not already created. By default, also closes issues that does not have
- * their comments in the code anymore.
+ * their comments in the code anymore. If an issue to be created was already opened and closed in the past, it
+ * gets reopened.
  *
  * @param comments
  * @param clean - determines if deleted comments will close existing issues
@@ -13,7 +14,7 @@ import {getOperations, getOrigin} from './helpers';
 export default async function createIssues(
   comments: string[],
   clean = true,
-): Promise<number> {
+): Promise<{created: number; opened: number; closed: number}> {
   const api = new ApiClient();
 
   const origin = await getOrigin();
@@ -33,7 +34,24 @@ export default async function createIssues(
   const existing = await api.getIssues(repo);
   const operations = getOperations(comments, existing);
 
-  // console.log('\n', operations);
+  for (const title of operations.toCreate) {
+    await api.createIssue(title, repo);
+  }
 
-  return 0;
+  // we skip cleaning if the flag was added
+  if (clean) {
+    for (const number of operations.toClose) {
+      await api.toggleIssue(number, 'closed', repo);
+    }
+  }
+
+  for (const number of operations.toOpen) {
+    await api.toggleIssue(number, 'open', repo);
+  }
+
+  return {
+    created: operations.toCreate.length,
+    opened: operations.toOpen.length,
+    closed: operations.toClose.length,
+  };
 }
