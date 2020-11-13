@@ -17,7 +17,7 @@ export async function checkGit(): Promise<void> {
  * Checks for proper usage. Allowed non-flag inputs are determined by this function. It expects all flags
  * to be handled and deleted before being called so any unhandled flag will result in a usage error.
  *
- * @param {meow.Result<any>} cli
+ * @param cli
  */
 export async function checkUsage(cli: meow.Result<any>): Promise<void> {
   const {input} = cli;

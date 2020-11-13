@@ -8,4 +8,5 @@ export default class Constants {
   ghClientID = 'ec5084fcd83b641e208e';
   ghOAuthURL = 'https://github.com/login/oauth/authorize';
   ghApiURL = 'https://api.github.com';
+  scope = 'repo';
 }

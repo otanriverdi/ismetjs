@@ -33,10 +33,10 @@ export function exit(message: string, code = 0): void {
  * @param {() => Promise<unknown>} action
  * @param {string} message
  */
-export async function load(
-  action: (spinner: ora.Ora) => Promise<unknown>,
+export async function load<T>(
+  action: (spinner: ora.Ora) => Promise<T>,
   message: string,
-): Promise<unknown> {
+): Promise<T> {
   const spinner = ora(message).start();
 
   try {
@@ -55,6 +55,8 @@ export async function load(
     console.error(error);
 
     exit('Failure. Check the error log for more details', 1);
+
+    throw '';
   }
 }
 
@@ -64,15 +66,20 @@ export async function load(
  *
  * @param {meow.Result<any>} cli
  * @param {string} name
+ * @returns flag
  * @callback callback
  */
-export async function flag(
+export function flag(
   cli: meow.Result<any>,
   name: string,
-  callback: () => any,
-): Promise<void> {
-  if (cli.flags[name]) {
-    await callback();
+  callback: () => any = () => {
+    return;
+  },
+): void {
+  const flag = cli.flags[name];
+
+  if (flag) {
+    callback();
   }
 
   delete cli.flags[name];

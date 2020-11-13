@@ -12,10 +12,13 @@ import * as validators from 'validators';
 const cli = meow(
   `
 	Usage
-    $ ismet <directory>
+    $ ismet <directory (default: '.')>
   
   Options
-    --logout, -l Logout from Github
+    --skip-clean -> Will not close deleted issues
+    --dry-run -> Prints found issues without creating.
+    --logout, -l -> Logs out from Github
+    --version, -v -> Prints version
 
   Examples
 	  $ ismet
@@ -27,6 +30,17 @@ const cli = meow(
     flags: {
       logout: {
         type: 'boolean',
+        alias: 'l',
+      },
+      skipClean: {
+        type: 'boolean',
+      },
+      version: {
+        type: 'boolean',
+        alias: 'v',
+      },
+      dryRun: {
+        type: 'boolean',
       },
     },
   },
@@ -34,15 +48,35 @@ const cli = meow(
 
 // main entry point
 (async function () {
-  helpers.welcome();
+  // Flags will be handled in the order they are called here
+
+  helpers.flag(cli, 'version', () => {
+    //eslint-disable-next-line
+    console.log(cli.pkg.version);
+    process.exit(0);
+  });
+
   helpers.flag(cli, 'logout', () => {
     logout();
     helpers.exit('Logged out', 0);
   });
 
+  let clean = false;
+  helpers.flag(cli, 'skipClean', () => {
+    clean = true;
+  });
+
+  let dry = false;
+  helpers.flag(cli, 'dryRun', () => {
+    dry = true;
+  });
+
   // ALL FLAGS MUST BE HANDLED BEFORE CALLING CHECK USAGE
   validators.checkGit();
   validators.checkUsage(cli);
+
+  // Some flags may need to print before welcoming
+  helpers.welcome();
 
   // if no dir is passed as an input, we use the current directory
   const directory = cli.input[0] || '.';
@@ -50,20 +84,30 @@ const cli = meow(
 
   // getting comments before auth because we don't want to bother the user
   // until we have issues to create
-  const comments = (await helpers.load(async () => {
-    return await parse(fullPath);
-  }, `Parsing '${directory}' for issues`)) as string[];
+  const comments = await helpers.load(
+    async () => await parse(fullPath),
+    `Parsing '${directory}' for issues...`,
+  );
   if (!comments.length) {
-    helpers.exit(`Found no issues`, 0);
+    helpers.exit(`Found no issues.`, 0);
   }
 
-  await helpers.load(async () => await authenticate(), 'Authenticating');
+  if (dry) {
+    const unique = Array.from(new Set([...comments]));
+    //eslint-disable-next-line
+    console.table(unique);
+    helpers.exit(`Found ${unique.length} issues to be created`);
+  }
 
-  const created = await helpers.load(
-    async () => await generateIssues(comments),
-    'Creating issues',
+  await helpers.load(async () => await authenticate(), 'Authenticating...');
+
+  const {created, closed, opened} = await helpers.load(
+    async () => await generateIssues(comments, clean),
+    'Creating issues...',
   );
 
-  // TODO replace with created
-  helpers.exit(`Created ${created} issues.`, 0);
+  helpers.exit(
+    `Created ${created}, closed ${closed}, opened ${opened} issues.`,
+    0,
+  );
 })();
