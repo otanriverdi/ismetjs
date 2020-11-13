@@ -16,7 +16,10 @@ class GithubApiClient {
     }
 
     this.client = axios.create({
-      headers: {Authorization: `token ${this.token}`},
+      headers: {
+        Authorization: `token ${this.token}`,
+        Accept: 'application/vnd.github.v3+json',
+      },
       baseURL: 'https://api.github.com',
     });
   }
