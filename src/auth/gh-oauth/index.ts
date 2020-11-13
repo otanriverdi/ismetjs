@@ -3,7 +3,7 @@ import open from 'open';
 import {v4 as uuidv4} from 'uuid';
 import startServer from './server';
 
-const {ghClientID, store, ghOAuthURL} = config;
+const {ghClientID, store, ghOAuthURL, scope} = config;
 
 /**
  * Starts the Github OAuth flow. Resolves when the process is complete and the access token will be available
@@ -25,7 +25,7 @@ export default async function ghOAuth(): Promise<void> {
     // open the users browser on the github authorization page and we send the local koa server as the
     // redirect uri
     open(
-      `${ghOAuthURL}/?client_id=${ghClientID}&redirect_uri=http://localhost:${port}&state=${id}`,
+      `${ghOAuthURL}/?client_id=${ghClientID}&redirect_uri=http://localhost:${port}&state=${id}&scope=${scope}`,
     );
   });
 }
