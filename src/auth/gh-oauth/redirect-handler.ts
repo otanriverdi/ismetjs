@@ -5,7 +5,7 @@ import Koa from 'koa';
 const {store} = config;
 
 /**
- * Returns the router handler for Github OAuth server. Compares the passed in id with the state that was sent and
+ * Generates the router handler for Github OAuth server. Compares the passed in id with the state that was sent and
  * makes the final post request to get the access token. Calls the `onSuccess` callback with the token and calls
  * the `onEnd` callback when the execution end even if it errors.
  *
@@ -19,6 +19,7 @@ export default function createHandler(
   onEnd: () => unknown,
 ) {
   return async (ctx: Koa.ParameterizedContext): Promise<void> => {
+    // we return a single error to the user for all server errors for security
     try {
       const {code, state} = ctx.request.query;
 

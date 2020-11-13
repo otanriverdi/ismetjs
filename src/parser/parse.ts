@@ -29,8 +29,7 @@ export default function (input: string): string[] {
       }
     });
   } catch {
-    // all errors here will be parsing errors and we don't care about the errors
-    // inside the users files
+    // all errors here will be parsing errors and we don't care about users errors
     return [];
   }
 
