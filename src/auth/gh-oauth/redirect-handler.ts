@@ -51,7 +51,9 @@ export default function createHandler(
 
       onEnd();
 
-      throw new Error('Github OAuth failed. Please try again.');
+      throw new Error(
+        'Github OAuth failed. Your token might be revoked or expired. Run `--logout` to reset.',
+      );
     }
   };
 }

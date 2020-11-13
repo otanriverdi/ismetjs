@@ -1,5 +1,5 @@
 import * as execa from 'execa';
-import {getOrigin} from '../helpers';
+import {getOperations, getOrigin} from '../helpers';
 
 describe('getOrigin()', () => {
   const execaSpy = jest.spyOn(execa, 'default');
@@ -31,5 +31,35 @@ describe('getOrigin()', () => {
     await expect(getOrigin()).rejects.toThrow(
       "Couldn't retrieve the origin repo",
     );
+  });
+});
+
+describe('getOperations()', () => {
+  let operations: {
+    toCreate: string[];
+    toOpen: number[];
+    toClose: number[];
+  };
+
+  beforeAll(() => {
+    operations = getOperations(
+      ['1', '2'],
+      [
+        {title: 'a', state: 'open', id: 1, labels: []},
+        {title: '1', state: 'closed', id: 2, labels: []},
+      ],
+    );
+  });
+
+  test('should return issues to create', () => {
+    expect(operations.toCreate).toStrictEqual(['2']);
+  });
+
+  test('should return issues to close', () => {
+    expect(operations.toClose).toStrictEqual([1]);
+  });
+
+  test('should return issues to open', () => {
+    expect(operations.toOpen).toStrictEqual([2]);
   });
 });

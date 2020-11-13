@@ -1,5 +1,6 @@
 import axios from 'axios';
 import config from 'config';
+import {Issue, Repo} from './types';
 
 /**
  * Class to interface with the Github API.
@@ -27,10 +28,10 @@ class GithubApiClient {
   /**
    * Gets all repos with explicit permissions for the logged in user
    */
-  async getUserRepos() {
+  async getUserRepos(): Promise<Repo[]> {
     const results = await this.client.get(`/user/repos`);
 
-    return results.data as any[];
+    return results.data as Repo[];
   }
 
   /**
@@ -38,10 +39,12 @@ class GithubApiClient {
    *
    * @param repo
    */
-  async getIssues(repo: string) {
-    const results = await this.client.get(`/repos/${repo}/issues?labels=ismet`);
+  async getIssues(repo: string): Promise<Issue[]> {
+    const results = await this.client.get(
+      `/repos/${repo}/issues?labels=ismet&state=all`,
+    );
 
-    return results.data as any[];
+    return results.data as Issue[];
   }
 }
 

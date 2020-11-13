@@ -1,11 +1,17 @@
 import ApiClient from './api-client';
-import {getOrigin} from './helpers';
+import {getOperations, getOrigin} from './helpers';
 
 /**
- * Converts comments to issues to be created. Existing issues are ignored. Returns the number
- * of issues created
+ * Creates issues from comments that are not already created. By default, also closes issues that does not have
+ * their comments in the code anymore.
+ *
+ * @param {string[]} comments
+ * @param {boolean} clean
  */
-export default async function (): Promise<number> {
+export default async function (
+  comments: string[],
+  clean = true,
+): Promise<number> {
   const api = new ApiClient();
 
   const origin = await getOrigin();
@@ -22,9 +28,10 @@ export default async function (): Promise<number> {
     );
   }
 
-  const existingIssues = await api.getIssues(repo);
+  const existing = await api.getIssues(repo);
+  const operations = getOperations(comments, existing);
 
-  // TODO create a helper function that returns issues to be created
+  // console.log('\n', operations);
 
   return 0;
 }

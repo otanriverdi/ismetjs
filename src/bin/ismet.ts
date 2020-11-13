@@ -60,7 +60,7 @@ const cli = meow(
   await helpers.load(async () => await authenticate(), 'Authenticating');
 
   const created = await helpers.load(
-    async () => await generateIssues(),
+    async () => await generateIssues(comments),
     'Creating issues',
   );
 
