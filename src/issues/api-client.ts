@@ -61,6 +61,8 @@ class GithubApiClient {
   async createIssue(title: string, repo: string): Promise<void> {
     await this.client.post(`/repos/${repo}/issues`, {
       title,
+      body:
+        'Generated automatically by 🐙 [ismet](https://www.github.com/otanriverdi/ismetjs)',
       labels: ['ismet'],
     });
   }
