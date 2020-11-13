@@ -98,7 +98,14 @@
   },
   "release": {
     "branches": [
-      "master"
+      {
+        "name": "master"
+      },
+      {
+        "name": "beta",
+        "channel": "beta",
+        "prerelease": "beta"
+      }
     ]
   },
   "dependencies": {
