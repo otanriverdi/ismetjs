@@ -13,8 +13,8 @@ const {acceptedExtensions} = config;
  * Parses all the files inside the directory on the provided path and returns all
  * comments with the `ismet` directive.
  *
- * @param fullPath
- * @returns comments[]
+ * @param fullPath full path to directory to be parsed
+ * @returns ismet comments
  */
 export default async function parse(fullPath: string): Promise<string[]> {
   // get .gitignore

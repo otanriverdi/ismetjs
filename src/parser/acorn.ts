@@ -6,7 +6,7 @@ import config from 'config';
  * Wrapper around the `acorn.parse` function.
  * Parses the provided JS input and calls the callback when it finds a comment.
  *
- * @param input
+ * @param input javascript, jsx code as a string
  * @callback onComment
  */
 export default function parseJS(

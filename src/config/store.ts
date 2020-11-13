@@ -8,7 +8,7 @@ export default class Store {
   private conf = new Conf();
 
   /**
-   * Saves the access token to the store..
+   * Saves the access token to the store.
    *
    * @param token
    */

@@ -6,11 +6,10 @@ const {store} = config;
 
 /**
  * Generates the router handler for Github OAuth server. Compares the passed in id with the state that was sent and
- * makes the final post request to get the access token. Calls the `onSuccess` callback with the token and calls
- * the `onEnd` callback when the execution end even if it errors.
+ * makes the final post request to get the access token.
  *
  * @param id state that was sent
- * @callback onSuccess will be called with token
+ * @callback onSuccess will be called with the access token
  * @callback onEnd will be called once the execution ends
  */
 export default function createHandler(

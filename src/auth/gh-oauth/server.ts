@@ -6,12 +6,11 @@ import {AddressInfo} from 'net';
 import createHandler from './redirect-handler';
 
 /**
- * Starts the `koa` server, returns the port and listens for a request from Github. Executes the `onSuccess`
- * callback once the access token is received. The passed in ID will be compared by the handler to the response
- * to secure the process. Server times out after 3 minutes.
+ * Starts the `koa` server, returns the port and listens for a request from Github. The passed in ID will be
+ * compared by the handler to the response to secure the process. Server times out after 3 minutes.
  *
- * @param id uuid
- * @callback onSuccess
+ * @param id to compare to the redirect state
+ * @callback onSuccess will be called with the token
  */
 export default function startServer(
   id: string,

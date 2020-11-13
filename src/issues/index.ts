@@ -6,7 +6,7 @@ import {getOperations, getOrigin} from './helpers';
  * their comments in the code anymore.
  *
  * @param comments
- * @param clean
+ * @param clean - determines if deleted comments will close existing issues
  */
 export default async function createIssues(
   comments: string[],

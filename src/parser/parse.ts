@@ -7,7 +7,7 @@ const {directive} = config;
  * Parses the provided JS input and returns all comments with an `ismet` directive.
  * Directive string will be removed. If the JS file throws an error, it will return an empty array.
  *
- * @param input
+ * @param input javascript, jsx code as a string
  * @returns comments[]
  */
 export default function parseComments(input: string): string[] {
