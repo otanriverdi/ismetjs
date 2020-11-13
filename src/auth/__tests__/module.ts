@@ -12,13 +12,13 @@ describe('authenticate()', () => {
     .spyOn(config.store, 'getAccessToken')
     .mockImplementation(() => 'a');
 
-  test('should do nothing if there is an existing token', async () => {
+  test('should do nothing if the user is logged in', async () => {
     await authenticate();
 
     expect(oauthSpy).not.toBeCalled();
   });
 
-  test('should start the oauth flow if there is no token', async () => {
+  test('should start the login process if the user is not logged in', async () => {
     configSpy.mockImplementation(() => '');
 
     await authenticate();

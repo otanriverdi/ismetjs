@@ -2,8 +2,8 @@ import config from 'config';
 import ghOAuth from './gh-oauth';
 
 /**
- * Checks the local store for an existing access token for this directory and starts the OAuth flow if the
- * token doesn't exist.
+ * Checks if the user is already logged in and starts the login process if the
+ * they are not.
  */
 export async function authenticate(): Promise<void> {
   if (!config.store.getAccessToken()) {
@@ -12,7 +12,7 @@ export async function authenticate(): Promise<void> {
 }
 
 /**
- * Logs the user out by deleting their saved info.
+ * Logs the user out.
  */
 export function logout(): void {
   config.store.deleteAccessToken();

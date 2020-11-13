@@ -9,7 +9,7 @@ const {ghClientID, store} = config;
  * Starts the Github OAuth flow. Resolves when the process is complete and the access token will be available
  * through the `config`.
  */
-export default async function (): Promise<void> {
+export default async function ghOAuth(): Promise<void> {
   return new Promise(resolve => {
     const id = uuidv4();
 

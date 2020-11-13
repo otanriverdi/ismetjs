@@ -2,7 +2,7 @@ import axios from 'axios';
 import config from 'config';
 
 /**
- * Class to interface with the Github API. The module exports an instance of the class.
+ * Class to interface with the Github API.
  */
 class GithubApiClient {
   token;
@@ -45,4 +45,4 @@ class GithubApiClient {
   }
 }
 
-export default new GithubApiClient();
+export default GithubApiClient;

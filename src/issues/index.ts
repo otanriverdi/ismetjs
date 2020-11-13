@@ -1,4 +1,4 @@
-import api from './api-client';
+import ApiClient from './api-client';
 import {getOrigin} from './helpers';
 
 /**
@@ -6,6 +6,8 @@ import {getOrigin} from './helpers';
  * of issues created
  */
 export default async function (): Promise<number> {
+  const api = new ApiClient();
+
   const origin = await getOrigin();
   if (!origin.includes('github.com:')) {
     throw new Error('Currently ismet only supports Github repos!');
