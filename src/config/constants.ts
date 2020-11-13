@@ -6,4 +6,5 @@ export default class Constants {
   directive = '$(ismet)';
   acceptedExtensions = ['js', 'jsx'];
   ghClientID = 'ec5084fcd83b641e208e';
+  ghOAuthURL = 'https://github.com/login/oauth/authorize';
 }

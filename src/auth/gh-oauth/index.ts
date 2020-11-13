@@ -3,7 +3,7 @@ import open from 'open';
 import {v4 as uuidv4} from 'uuid';
 import startServer from './server';
 
-const {ghClientID, store} = config;
+const {ghClientID, store, ghOAuthURL} = config;
 
 /**
  * Starts the Github OAuth flow. Resolves when the process is complete and the access token will be available
@@ -20,7 +20,7 @@ export default async function ghOAuth(): Promise<void> {
     });
 
     open(
-      `https://github.com/login/oauth/authorize/?client_id=${ghClientID}&redirect_uri=http://localhost:${port}&state=${id}`,
+      `${ghOAuthURL}/?client_id=${ghClientID}&redirect_uri=http://localhost:${port}&state=${id}`,
     );
   });
 }

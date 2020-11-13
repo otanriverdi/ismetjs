@@ -1,3 +1,4 @@
+import Router from '@koa/router';
 import Koa from 'koa';
 import bodyParser from 'koa-bodyparser';
 import helmet from 'koa-helmet';
@@ -19,15 +20,19 @@ export default function startServer(
   // the koa app will start listening on a free port and the address of the app will be
   // sent to Github as the redirect URI.
   const app = new Koa();
+  const router = new Router();
 
-  app.use(helmet());
-  app.use(bodyParser());
-  app.use(
+  router.get(
+    '/',
     createHandler(id, onSuccess, () => {
       clearTimeout(timer);
       server.close();
     }),
   );
+
+  app.use(helmet());
+  app.use(bodyParser());
+  app.use(router.routes());
 
   const server = app.listen(0);
 

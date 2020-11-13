@@ -33,17 +33,20 @@ export default function createHandler(
         if (access_token) {
           store.setAccessToken(access_token);
 
-          ctx.body = '🐙 Done! Go back to your terminal';
+          ctx.body =
+            '<h1>🐙 You are in! You can close this tab and go back to your terminal.<h1>';
 
           onEnd();
           onSuccess(access_token);
 
           return;
         }
+      } else {
+        throw new Error('Invalid state');
       }
     } catch (error) {
       ctx.body =
-        '🐙 There was an error authenticating. Check the logs for more details.';
+        '<h1 style="color:red;">🐙 Oh no! There was an error authenticating. Check the logs for more details.</h1>';
 
       onEnd();
 
