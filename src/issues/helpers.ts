@@ -22,6 +22,7 @@ export async function getOrigin(): Promise<string> {
  *
  * @param comments
  * @param existing existing issues
+ * @returns operations to call the api with
  */
 export function getOperations(
   comments: string[],

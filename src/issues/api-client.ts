@@ -29,6 +29,8 @@ class GithubApiClient {
 
   /**
    * Gets all repos with explicit permissions for the logged in user
+   *
+   * @returns repos
    */
   async getUserRepos(): Promise<Repo[]> {
     const results = await this.client.get(`/user/repos`);
@@ -40,6 +42,7 @@ class GithubApiClient {
    * Gets all issues of the provided repo.
    *
    * @param repo
+   * @returns issues
    */
   async getIssues(repo: string): Promise<Issue[]> {
     const results = await this.client.get(

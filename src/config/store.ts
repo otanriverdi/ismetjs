@@ -18,6 +18,8 @@ export default class Store {
 
   /**
    * Gets the access token saved inside the store.
+   *
+   * @returns access token
    */
   getAccessToken(): string {
     return this.conf.get(`access_token`) as string;

@@ -8,7 +8,7 @@ const {directive} = config;
  * Directive string will be removed. If the JS file throws an error, it will return an empty array.
  *
  * @param input javascript, jsx code as a string
- * @returns comments[]
+ * @returns ismet comments
  */
 export default function parseComments(input: string): string[] {
   const comments: string[] = [];

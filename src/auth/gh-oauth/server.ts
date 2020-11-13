@@ -10,6 +10,7 @@ import createHandler from './redirect-handler';
  * compared by the handler to the response to secure the process. Server times out after 3 minutes.
  *
  * @param id to compare to the redirect state
+ * @returns port of the server and the app instance
  * @callback onSuccess will be called with the token
  */
 export default function startServer(
