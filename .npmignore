@@ -1,2 +1,5 @@
 # Functions are not a part of the package
 functions
+.firebaserc
+.firebase.json
+.travis.yml

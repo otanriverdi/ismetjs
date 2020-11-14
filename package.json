@@ -5,9 +5,6 @@
   "author": "Özgür Tanrıverdi (@otanriverdi)",
   "license": "MIT",
   "main": "dist/bin/ismet.js",
-  "files": [
-    "dist"
-  ],
   "bin": {
     "ismet": "dist/bin/ismet.js"
   },
