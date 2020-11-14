@@ -4,6 +4,10 @@
   "description": "A CLI tool to automatically generate and manage git remote repository issues from code comments.",
   "author": "Özgür Tanrıverdi (@otanriverdi)",
   "license": "MIT",
+  "main": "dist/bin/ismet.js",
+  "files": [
+    "dist"
+  ],
   "bin": {
     "ismet": "dist/bin/ismet.js"
   },
@@ -33,9 +37,6 @@
     "semantic-release": "semantic-release",
     "deploy:firebase": "cd functions && npm run build && npm run deploy"
   },
-  "files": [
-    "dist/**/*"
-  ],
   "keywords": [
     "issue",
     "remote",
