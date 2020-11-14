@@ -11,3 +11,7 @@ src
 .babelrc
 jest.config.js
 tsconfig.json
+test
+**/__tests__/**
+**/__mocks__/**
+*.d.js
