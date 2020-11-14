@@ -1,6 +1,7 @@
 import axios from 'axios';
 import config from 'config';
 import Koa from 'koa';
+import {html} from './success';
 
 const {store} = config;
 
@@ -34,8 +35,7 @@ export default function createHandler(
         if (access_token) {
           store.setAccessToken(access_token);
 
-          ctx.body =
-            '<h1>🐙 You are in! You can close this tab and go back to your terminal.<h1>';
+          ctx.body = html;
 
           onEnd();
           onSuccess(access_token);
