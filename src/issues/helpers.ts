@@ -28,20 +28,19 @@ export function getOperations(
   comments: string[],
   existing: Issue[],
 ): {toCreate: string[]; toOpen: number[]; toClose: number[]} {
-  const openIssues = existing.filter(issue => issue.state === 'open');
-  const closedIssues = existing.filter(issue => issue.state === 'closed');
-
   const toCreate = comments.filter(
     comment => !existing.find(issue => issue.title === comment),
   );
 
-  const toOpen = closedIssues
-    .filter(issue => comments.includes(issue.title))
-    .map(i => i.number);
-
-  const toClose: number[] | undefined = openIssues
-    .filter(issue => !comments.includes(issue.title))
-    .map(i => i.number);
+  const toOpen: number[] = [];
+  const toClose: number[] = [];
+  for (const issue of existing) {
+    if (issue.state === 'closed' && comments.includes(issue.title)) {
+      toOpen.push(issue.number);
+    } else if (issue.state === 'open' && !comments.includes(issue.title)) {
+      toClose.push(issue.number);
+    }
+  }
 
   return {toCreate: Array.from(new Set([...toCreate])), toOpen, toClose};
 }
