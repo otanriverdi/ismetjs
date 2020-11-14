@@ -1,5 +1,13 @@
 # Functions are not a part of the package
 functions
 .firebaserc
-.firebase.json
+firebase.json
 .travis.yml
+.github
+coverage
+src
+.eslintrc
+.prettierrc
+.babelrc
+jest.config.js
+tsconfig.json

@@ -18,4 +18,5 @@ jobs:
       deploy:
         provider: script
         script:
+          - npm run build
           - npx semantic-release
