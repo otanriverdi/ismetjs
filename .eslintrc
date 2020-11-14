@@ -8,5 +8,8 @@
     "plugin:jest/recommended",
     "prettier",
     "prettier/@typescript-eslint"
-  ]
+  ],
+  "rules": {
+    "no-console": "error"
+  }
 }

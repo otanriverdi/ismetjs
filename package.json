@@ -18,21 +18,20 @@
   "scripts": {
     "setup": "npm install && npm run validate",
     "link": "npm rm -g ismetjs && npm link",
-    "build": "run-p build:types build:js",
-    "build:types": "tsc --emitDeclarationOnly",
-    "build:js": "babel src --out-dir dist --extensions \".ts\" --source-maps inline",
-    "build:dev": "npm run build:js && npm run link",
+    "build": "babel src --out-dir dist --extensions \".ts\" --source-maps inline",
+    "build:dev": "npm run build && npm run link",
     "dev": "nodemon -e .ts --watch src --exec npm run build:dev --ignore src/test --ignore '**/__test__/**'",
     "test": "is-ci test:coverage test:watch",
     "test:coverage": "jest src --coverage --passWithNoTests",
     "test:watch": "jest src --watch",
     "test:debug": "node --inspect-brk ./node_modules/jest/bin/jest.js --runInBand",
-    "lint": "eslint --ignore-path .gitignore --ext .ts",
-    "prettier": "prettier --ignore-path .gitignore \"**/*.(js|ts|json)\"",
+    "lint": "eslint --ignore-path .npmignore --ext .ts",
+    "prettier": "prettier --ignore-path .npmignore \"**/*.(js|ts|json)\"",
     "check:format": "npm run prettier -- --list-different",
     "check:types": "tsc --noEmit",
-    "validate": "run-p check:types check:format lint build test",
-    "semantic-release": "semantic-release"
+    "validate": "run-p check:format lint test build",
+    "semantic-release": "semantic-release",
+    "deploy:firebase": "cd functions && npm run build && npm run deploy"
   },
   "keywords": [
     "issue",
@@ -50,7 +49,15 @@
     "@babel/plugin-proposal-class-properties": "^7.12.1",
     "@babel/preset-env": "^7.12.1",
     "@babel/preset-typescript": "^7.12.1",
+    "@types/acorn": "^4.0.5",
+    "@types/axios": "^0.14.0",
     "@types/jest": "^26.0.15",
+    "@types/koa": "^2.11.6",
+    "@types/koa-bodyparser": "^4.3.0",
+    "@types/koa-helmet": "^6.0.1",
+    "@types/koa__router": "^8.0.3",
+    "@types/parse-gitignore": "^1.0.0",
+    "@types/uuid": "^8.3.0",
     "@typescript-eslint/eslint-plugin": "^4.6.1",
     "@typescript-eslint/parser": "^4.6.1",
     "babel-jest": "^26.6.3",
@@ -72,7 +79,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged && npm run build"
+      "pre-commit": "npm run check:types && lint-staged && npm run build"
     }
   },
   "lint-staged": {
@@ -81,8 +88,7 @@
     ],
     "*.ts": [
       "jest --findRelatedTests",
-      "npm run lint",
-      "npm run check:types"
+      "npm run lint"
     ]
   },
   "config": {
@@ -92,7 +98,31 @@
   },
   "release": {
     "branches": [
-      "master"
+      {
+        "name": "master"
+      },
+      {
+        "name": "beta",
+        "channel": "beta",
+        "prerelease": "beta"
+      }
     ]
+  },
+  "dependencies": {
+    "@koa/router": "^10.0.0",
+    "acorn": "^8.0.4",
+    "acorn-jsx": "^5.3.1",
+    "axios": "^0.21.0",
+    "chalk": "^4.1.0",
+    "conf": "^7.1.2",
+    "execa": "^4.1.0",
+    "koa": "^2.13.0",
+    "koa-bodyparser": "^4.3.0",
+    "koa-helmet": "^6.0.0",
+    "meow": "^8.0.0",
+    "open": "^7.3.0",
+    "ora": "^5.1.0",
+    "parse-gitignore": "^1.0.1",
+    "uuid": "^8.3.1"
   }
 }
