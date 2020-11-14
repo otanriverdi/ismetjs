@@ -29,7 +29,7 @@
 ## Install
 
 ```sh
-npm install ismetjs --save-dev
+npm install -g ismetjs
 ```
 
 ## Usage
