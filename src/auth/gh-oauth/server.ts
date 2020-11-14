@@ -40,7 +40,7 @@ export default function startServer(
   const timer = setTimeout(() => {
     server.close();
 
-    throw new Error('Timeout on authentication reached.');
+    throw new Error('Server timeout.');
   }, 180000);
 
   return {port: (<AddressInfo>server.address()).port, app};
