@@ -33,6 +33,9 @@
     "semantic-release": "semantic-release",
     "deploy:firebase": "cd functions && npm run build && npm run deploy"
   },
+  "files": [
+    "dist"
+  ],
   "keywords": [
     "issue",
     "remote",

@@ -1,2 +1,10 @@
 # Functions are not a part of the package
 functions
+src
+coverage
+.github
+.prettierrc
+.eslintrc
+.firebaserc
+firebase.json
+.travis.yml
