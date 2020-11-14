@@ -9,6 +9,7 @@ import parse from 'parser';
 import path from 'path';
 import * as validators from 'validators';
 
+// CLI configuration
 const cli = meow(
   `
 	Usage
