@@ -5,7 +5,7 @@
     <img src="https://img.shields.io/npm/v/ismetjs" alt="version">
   </a>
   <a href="https://travis-ci.org/otanriverdi/ismetjs">
-    <img src="https://travis-ci.org/otanriverdi/ismetjs.svg?branch=master" alt="travis">
+    <img src="https://travis-ci.com/otanriverdi/ismetjs.svg?branch=master" alt="travis">
   </a>
   <a href="https://codecov.io/gh/otanriverdi/ismetjs">
     <img src="https://codecov.io/gh/otanriverdi/ismetjs/branch/master/graph/badge.svg" />
