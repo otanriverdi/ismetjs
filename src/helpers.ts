@@ -7,8 +7,8 @@ import ora from 'ora';
 /**
  * Displays a message styled based on the status code and exits the CLI with the provided code.
  *
- * @param {string} message message to display
- * @param {number} code exit code (default: 0)
+ * @param message message to display
+ * @param code exit code (default: 0)
  */
 export function exit(message: string, code = 0): void {
   // eslint-disable-next-line
@@ -30,8 +30,8 @@ export function exit(message: string, code = 0): void {
  * will be returned. If the action resolves, the spinner will switch to a success message. If the action fails,
  * the `error` will be logged and `helpers.exit()` will  be called with a status code of `1`.
  *
- * @param {() => Promise<unknown>} action
- * @param {string} message
+ * @param action
+ * @param message
  */
 export async function load<T>(
   action: (spinner: ora.Ora) => Promise<T>,
@@ -64,8 +64,8 @@ export async function load<T>(
  * Executes the callback if the flag exists and then deletes the flag. It's getting deleted so that the usage
  * validation can check if there are any flags remaining. Can be awaited if the callback is async.
  *
- * @param {meow.Result<any>} cli
- * @param {string} name
+ * @param cli
+ * @param name
  * @returns flag
  * @callback callback
  */

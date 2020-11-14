@@ -25,3 +25,41 @@
 
 <p align="center">🐙</p>
 <p align="center"><b>>_ A CLI tool to automatically generate and manage git repo issues from code comments.</b></p>
+
+## Install
+
+```sh
+npm install ismetjs --save-dev
+```
+
+## Usage
+
+```sh
+ismet
+```
+
+To see all available commands;
+
+```sh
+ismet --help
+```
+
+### Running pre-commit
+
+Running `ismet` pre-commit using a library like [husky](https://github.com/typicode/husky) is recommended.
+
+### Dry run
+
+If you want to see issues to be created before submitting them on Github, you can;
+
+```sh
+ismet --dry-run
+```
+
+### Logging out
+
+If you want to log out from `ismet`.
+
+```sh
+ismet --logout
+```
