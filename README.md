@@ -1,4 +1,4 @@
-<h1 align="center">Ismet</h1>
+[![ismetjs]('./../assets/banner.png')](https://github.com/otanriverdi/ismetjs)
 
 <p align="center">
   <a href="https://npmjs.org/package/ismetjs">
