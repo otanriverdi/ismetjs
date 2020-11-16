@@ -1,4 +1,4 @@
-[![ismetjs]('./../assets/banner.png')](https://github.com/otanriverdi/ismetjs)
+[![ismetjs](https://raw.githubusercontent.com/otanriverdi/ismetjs/master/assets/banner.png)](https://github.com/otanriverdi/ismetjs)
 
 <p align="center">
   <a href="https://npmjs.org/package/ismetjs">
@@ -22,8 +22,6 @@
 </p>
 
 <br>
-
-<p align="center">🐙</p>
 <p align="center"><b>>_ A CLI tool to automatically generate and manage git repo issues from code comments.</b></p>
 
 ## Install
