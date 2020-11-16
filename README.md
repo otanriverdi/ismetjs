@@ -32,7 +32,7 @@ npm install -g ismetjs
 
 ## Usage
 
-**Currently, `ismet` only supports Github repositories and does not support Typescript.**
+**Currently, `ismet` only supports JavaScript files and Github repositories.**
 
 To run `ismet`:
 
