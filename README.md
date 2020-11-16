@@ -34,11 +34,15 @@ npm install -g ismetjs
 
 ## Usage
 
+**Currently, `ismet` only supports Github repositories and does not support Typescript.**
+
+To run `ismet`:
+
 ```sh
-ismet
+ismet <directory>
 ```
 
-To see all available commands;
+To see all available commands:
 
 ```sh
 ismet --help
@@ -50,7 +54,7 @@ Running `ismet` pre-commit using a library like [husky](https://github.com/typic
 
 ### Dry run
 
-If you want to see issues to be created before submitting them on Github, you can;
+If you want to see issues to be created before submitting them on Github:
 
 ```sh
 ismet --dry-run
@@ -58,7 +62,7 @@ ismet --dry-run
 
 ### Logging out
 
-If you want to log out from `ismet`.
+If you want to log out from `ismet`:
 
 ```sh
 ismet --logout
