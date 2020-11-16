@@ -9,7 +9,7 @@ describe('authenticate()', () => {
       return;
     });
   const configSpy = jest
-    .spyOn(config.store, 'getAccessToken')
+    .spyOn(config.store, 'token', 'get')
     .mockImplementation(() => 'a');
 
   test('should do nothing if the user is logged in', async () => {
@@ -29,7 +29,7 @@ describe('authenticate()', () => {
 
 describe('logout()', () => {
   const configSpy = jest
-    .spyOn(config.store, 'deleteAccessToken')
+    .spyOn(config.store, 'clearAccessToken')
     .mockImplementation(() => null);
 
   test('should delete the token', () => {

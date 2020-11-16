@@ -8,11 +8,11 @@ const {store, ghApiURL} = config;
  * Class to interface with the Github API.
  */
 class GithubApiClient {
-  token;
+  token: string | undefined;
   client;
 
   constructor() {
-    this.token = store.getAccessToken();
+    this.token = store.token;
 
     if (!this.token) {
       throw new Error('Access token not found');

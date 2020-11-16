@@ -17,7 +17,7 @@ export default async function ghOAuth(): Promise<void> {
 
     // we start a local koa server to listen for github redirects
     const {port} = startServer(id, token => {
-      store.setAccessToken(token);
+      store.token = token;
 
       resolve();
     });

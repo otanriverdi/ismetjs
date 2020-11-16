@@ -6,29 +6,26 @@ import Conf from 'conf';
  */
 export default class Store {
   private conf = new Conf();
+  private _token;
 
-  /**
-   * Saves the access token to the store.
-   *
-   * @param token
-   */
-  setAccessToken(token: string): void {
-    this.conf.set(`access_token`, token);
+  constructor() {
+    this._token = this.conf.get(`access_token`) as string | undefined;
   }
 
-  /**
-   * Gets the access token saved inside the store.
-   *
-   * @returns access token
-   */
-  getAccessToken(): string {
-    return this.conf.get(`access_token`) as string;
+  public get token(): string | undefined {
+    return this._token;
+  }
+
+  public set token(token: string | undefined) {
+    this.conf.set(`access_token`, token);
+    this._token = token;
   }
 
   /**
    * Deletes the access token saved inside the store.
    */
-  deleteAccessToken(): void {
+  clearAccessToken(): void {
     this.conf.delete(`access_token`);
+    this._token = undefined;
   }
 }

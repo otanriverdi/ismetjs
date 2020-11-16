@@ -3,7 +3,7 @@ import config from 'config';
 import Koa from 'koa';
 import * as html from './html';
 
-const {store, accessTokenURL} = config;
+const {accessTokenURL} = config;
 
 /**
  * Generates the router handler for Github OAuth server. Compares the passed in id with the state that was sent and
@@ -30,8 +30,6 @@ export default function createHandler(
         const {access_token} = response.data;
 
         if (access_token) {
-          store.setAccessToken(access_token);
-
           ctx.body = html.success;
 
           onEnd();
