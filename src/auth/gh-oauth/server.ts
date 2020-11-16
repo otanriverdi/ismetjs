@@ -34,6 +34,7 @@ export default function startServer(
   app.use(bodyParser());
   app.use(router.routes());
 
+  // 0 means starting on a random free port
   const server = app.listen(0);
 
   // server times out after 3 minutes.

@@ -9,4 +9,5 @@ export default class Constants {
   ghOAuthURL = 'https://github.com/login/oauth/authorize';
   ghApiURL = 'https://api.github.com';
   scope = 'repo';
+  accessTokenURL = 'https://us-central1-ismetjs.cloudfunctions.net/token';
 }

@@ -1,9 +1,9 @@
 import axios from 'axios';
 import config from 'config';
 import Koa from 'koa';
-import {html} from './success';
+import * as html from './html';
 
-const {store} = config;
+const {store, accessTokenURL} = config;
 
 /**
  * Generates the router handler for Github OAuth server. Compares the passed in id with the state that was sent and
@@ -25,29 +25,25 @@ export default function createHandler(
       const {code, state} = ctx.request.query;
 
       if (code && state === id) {
-        // see functions/README.md to understand why we don't make a request to Github API
-        const response = await axios.get(
-          `https://us-central1-ismetjs.cloudfunctions.net/token?code=${code}`,
-        );
+        const response = await axios.get(`${accessTokenURL}?code=${code}`);
 
         const {access_token} = response.data;
 
         if (access_token) {
           store.setAccessToken(access_token);
 
-          ctx.body = html;
+          ctx.body = html.success;
 
           onEnd();
           onSuccess(access_token);
 
           return;
         }
-      } else {
-        throw new Error('Invalid state');
       }
+
+      throw new Error('Invalid request.');
     } catch (error) {
-      ctx.body =
-        '<h1 style="color:red;">🐙 Oh no! There was an error authenticating. Check the logs for more details.</h1>';
+      ctx.body = html.failure;
 
       onEnd();
 
