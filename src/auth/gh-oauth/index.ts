@@ -22,7 +22,7 @@ export default async function ghOAuth(): Promise<void> {
       resolve();
     });
 
-    // open the users browser on the github authorization page and we send the local koa server as the
+    // opens the users browser on the github authorization page and sends the local koa server as the
     // redirect uri
     open(
       `${ghOAuthURL}/?client_id=${ghClientID}&redirect_uri=http://localhost:${port}&state=${id}&scope=${scope}`,

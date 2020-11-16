@@ -62,9 +62,9 @@ const cli = meow(
     helpers.exit('Logged out', 0);
   });
 
-  let clean = false;
+  let clean = true;
   helpers.flag(cli, 'skipClean', () => {
-    clean = true;
+    clean = false;
   });
 
   let dry = false;
