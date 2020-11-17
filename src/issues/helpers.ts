@@ -1,5 +1,6 @@
 import execa from 'execa';
-import {Issue} from './types';
+import {Comment} from 'parser/types';
+import {Issue, IssueCreate, IssueUpdate} from './types';
 
 /**
  * Gets the `git` origin of the repo of the cwd.
@@ -25,22 +26,57 @@ export async function getOrigin(): Promise<string> {
  * @returns operations to call the api with
  */
 export function getOperations(
-  comments: string[],
+  comments: Comment[],
   existing: Issue[],
-): {toCreate: string[]; toOpen: number[]; toClose: number[]} {
-  const toCreate = comments.filter(
-    comment => !existing.find(issue => issue.title === comment),
+): {
+  toCreate: IssueCreate[];
+  toUpdate: IssueUpdate[];
+  toClose: IssueUpdate[];
+} {
+  const newComments = comments.filter(
+    comment => !existing.find(issue => issue.title === comment.text),
   );
 
-  const toOpen: number[] = [];
-  const toClose: number[] = [];
+  const toCreate: IssueCreate[] = [];
+  newComments.forEach(comment => {
+    const duplicate = toCreate.find(c => c.title === comment.text);
+
+    if (duplicate) {
+      duplicate.body += `Seen on ${comment.location}\n`;
+    } else {
+      const issue: IssueCreate = {
+        title: comment.text,
+        body: `Generated automatically by [ismet](https://www.github.com/otanriverdi/ismetjs) 🐙\n\nSeen on ${comment.location}\n`,
+      };
+
+      toCreate.push(issue);
+    }
+  });
+
+  const toUpdate: IssueUpdate[] = [];
+  const toClose: IssueUpdate[] = [];
   for (const issue of existing) {
-    if (issue.state === 'closed' && comments.includes(issue.title)) {
-      toOpen.push(issue.number);
-    } else if (issue.state === 'open' && !comments.includes(issue.title)) {
-      toClose.push(issue.number);
+    const filtered = comments.filter(c => issue.title === c.text);
+
+    // if there are comments for existing issues, we update the body to reflect correct locations
+    if (filtered.length) {
+      let body =
+        'Generated automatically by [ismet](https://www.github.com/otanriverdi/ismetjs) 🐙\n\n';
+
+      filtered.forEach(c => (body += `Seen on ${c.location}\n`));
+
+      const update: IssueUpdate = {
+        number: issue.number,
+        updates: {
+          body,
+        },
+      };
+
+      toUpdate.push(update);
+    } else if (issue.state === 'open' && !filtered.length) {
+      toClose.push({number: issue.number});
     }
   }
 
-  return {toCreate: Array.from(new Set([...toCreate])), toOpen, toClose};
+  return {toCreate, toUpdate, toClose};
 }

@@ -1,3 +1,4 @@
+import {Comment} from 'parser/types';
 import ApiClient from './api-client';
 import {getOperations, getOrigin} from './helpers';
 
@@ -12,9 +13,9 @@ import {getOperations, getOrigin} from './helpers';
  * @default clean true
  */
 export default async function createIssues(
-  comments: string[],
+  comments: Comment[],
   clean = true,
-): Promise<{created: number; opened: number; closed: number}> {
+): Promise<{created: number; closed: number}> {
   const api = new ApiClient();
 
   const origin = await getOrigin();
@@ -34,24 +35,23 @@ export default async function createIssues(
   const existing = await api.getIssues(repo);
   const operations = getOperations(comments, existing);
 
-  for (const title of operations.toCreate) {
-    await api.createIssue(title, repo);
+  for (const issue of operations.toCreate) {
+    await api.createIssue(issue, repo);
   }
 
   // we skip cleaning if the flag was added
   if (clean) {
-    for (const number of operations.toClose) {
-      await api.toggleIssue(number, 'closed', repo);
+    for (const issue of operations.toClose) {
+      await api.editIssue(issue, repo, 'closed');
     }
   }
 
-  for (const number of operations.toOpen) {
-    await api.toggleIssue(number, 'open', repo);
+  for (const issue of operations.toUpdate) {
+    await api.editIssue(issue, repo);
   }
 
   return {
     created: operations.toCreate.length,
-    opened: operations.toOpen.length,
     closed: operations.toClose.length,
   };
 }

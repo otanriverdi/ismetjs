@@ -1,6 +1,6 @@
 import axios from 'axios';
 import config from 'config';
-import {Issue, Repo} from './types';
+import {Issue, IssueCreate, IssueUpdate, Repo} from './types';
 
 const {store, ghApiURL} = config;
 
@@ -58,11 +58,9 @@ class GithubApiClient {
    * @param title
    * @param repo
    */
-  async createIssue(title: string, repo: string): Promise<void> {
+  async createIssue(issue: IssueCreate, repo: string): Promise<void> {
     await this.client.post(`/repos/${repo}/issues`, {
-      title,
-      body:
-        'Generated automatically by 🐙 [ismet](https://www.github.com/otanriverdi/ismetjs)',
+      ...issue,
       labels: ['ismet'],
     });
   }
@@ -74,12 +72,15 @@ class GithubApiClient {
    * @param state
    * @param repo
    */
-  async toggleIssue(
-    number: number,
-    state: 'open' | 'closed',
+  async editIssue(
+    issue: IssueUpdate,
     repo: string,
+    state: 'open' | 'closed' = 'open',
   ): Promise<void> {
-    await this.client.patch(`/repos/${repo}/issues/${number}`, {state});
+    await this.client.patch(`/repos/${repo}/issues/${issue.number}`, {
+      ...issue.updates,
+      state,
+    });
   }
 }
 

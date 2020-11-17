@@ -18,7 +18,7 @@ const cli = meow(
   
   Options
     --skip-clean -> Will not close deleted issues
-    --dry-run -> Prints found issues without creating.
+    --list, -l -> Prints found issues without posting on Github.
     --logout, -l -> Logs out from Github
     --version, -v -> Prints version
 
@@ -28,7 +28,7 @@ const cli = meow(
 `,
   {
     description:
-      '🐙 Automatically generates and manages git repo issues from code comments. Ignores files in `.gitignore`.',
+      '🐙 Automatically manages git repo issues from code comments. Ignores files in `.gitignore`.',
     flags: {
       logout: {
         type: 'boolean',

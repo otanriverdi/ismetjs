@@ -1,4 +1,5 @@
 import * as execa from 'execa';
+import {IssueCreate, IssueUpdate} from 'issues/types';
 import {getOperations, getOrigin} from '../helpers';
 
 describe('getOrigin()', () => {
@@ -36,30 +37,61 @@ describe('getOrigin()', () => {
 
 describe('getOperations()', () => {
   let operations: {
-    toCreate: string[];
-    toOpen: number[];
-    toClose: number[];
+    toCreate: IssueCreate[];
+    toUpdate: IssueUpdate[];
+    toClose: IssueUpdate[];
   };
 
   beforeAll(() => {
     operations = getOperations(
-      ['1', '2'],
       [
-        {title: 'a', state: 'open', number: 1, labels: []},
-        {title: '1', state: 'closed', number: 2, labels: []},
+        {text: '1', location: ''},
+        {text: '2', location: ''},
+      ],
+      [
+        {title: 'a', state: 'open', number: 1, labels: [], body: ''},
+        {title: '1', state: 'closed', number: 2, labels: [], body: ''},
       ],
     );
   });
 
   test('should return issues to create', () => {
-    expect(operations.toCreate).toStrictEqual(['2']);
+    expect(operations.toCreate).toMatchInlineSnapshot(`
+      Array [
+        Object {
+          "body": "Generated automatically by [ismet](https://www.github.com/otanriverdi/ismetjs) 🐙
+
+      Seen on 
+      ",
+          "title": "2",
+        },
+      ]
+    `);
   });
 
   test('should return issues to close', () => {
-    expect(operations.toClose).toStrictEqual([1]);
+    expect(operations.toClose).toMatchInlineSnapshot(`
+      Array [
+        Object {
+          "number": 1,
+        },
+      ]
+    `);
   });
 
   test('should return issues to open', () => {
-    expect(operations.toOpen).toStrictEqual([2]);
+    expect(operations.toUpdate).toMatchInlineSnapshot(`
+      Array [
+        Object {
+          "number": 2,
+          "updates": Object {
+            "body": "Generated automatically by [ismet](https://www.github.com/otanriverdi/ismetjs) 🐙
+
+      Seen on 
+      ",
+          },
+        },
+      ]
+    `);
   });
 });

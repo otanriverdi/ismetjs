@@ -17,9 +17,6 @@ export default async function defaultCommand(): Promise<void> {
     async () => await parse(runtime.fullPath),
     `Parsing '${runtime.directory}' for issues...`,
   );
-  if (!comments.length) {
-    helpers.exit(`Found no issues.`, 0);
-  }
 
   if (runtime.dry) {
     //eslint-disable-next-line
@@ -29,14 +26,15 @@ export default async function defaultCommand(): Promise<void> {
 
   await helpers.load(async () => await authenticate(), 'Authenticating...');
 
-  const titles = comments.map(c => c.text);
-  const {created, closed, opened} = await helpers.load(
-    async () => await generateIssues(titles, runtime.clean),
-    'Creating issues...',
+  const {created, closed} = await helpers.load(
+    async () => await generateIssues(comments, runtime.clean),
+    'Managing issues...',
   );
 
   helpers.exit(
-    `Created ${created}, closed ${closed}, opened ${opened} issues.`,
+    `Done! ${created ? `${created} new issues. ` : ''}${
+      closed ? `${closed} issues closed.` : ''
+    }`,
     0,
   );
 }
