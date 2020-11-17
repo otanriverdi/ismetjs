@@ -53,7 +53,7 @@ export default async function parse(fullPath: string): Promise<Comment[]> {
 
       // the path relative to the directory that the tool was run will be
       // passed to the parser to be able to keep track of comment locations
-      const relativePath = fullPath.replace(process.cwd(), '');
+      const relativePath = fullPath.replace(process.cwd(), '') + '/' + dirent;
 
       const parsed = parseComments(data, relativePath);
 
