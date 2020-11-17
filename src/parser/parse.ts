@@ -27,7 +27,10 @@ export default function parseComments(
           text = text.replace(/\*/g, '');
         }
 
-        const location = relativePath + ':' + loc?.line + ':' + loc?.column;
+        let location = '';
+        if (loc) {
+          location = relativePath + ':' + loc.line + ':' + loc.column;
+        }
 
         text = text.replace(directive, '');
 
