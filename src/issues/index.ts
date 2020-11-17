@@ -18,12 +18,7 @@ export default async function createIssues(
 ): Promise<{created: number; closed: number}> {
   const api = new ApiClient();
 
-  const origin = await getOrigin();
-  if (!origin.includes('github.com:')) {
-    throw new Error('Currently ismet only supports Github repos!');
-  }
-
-  const repo = origin.split(':')[1].split('.')[0];
+  const repo = await getOrigin();
 
   const repos = await api.getUserRepos();
   if (!repos.find(r => r.full_name === repo)) {

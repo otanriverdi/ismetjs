@@ -8,13 +8,14 @@ import {Issue, IssueCreate, IssueUpdate} from './types';
 export async function getOrigin(): Promise<string> {
   const {stdout} = await execa('git', ['config', '--get', 'remote.origin.url']);
 
-  const split = stdout.split('@');
-
-  if (split[0] !== 'git') {
-    throw new Error("Couldn't retrieve the origin repo");
+  if (!stdout.includes('github')) {
+    throw new Error('Currently ismet only supports Github repos!');
   }
 
-  return split[1];
+  const route = stdout.split('github.com')[1].replace(':', '/');
+  const repo = route.split('.')[0];
+
+  return repo.replace('/', '');
 }
 
 /**

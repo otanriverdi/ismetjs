@@ -7,7 +7,7 @@ describe('getOrigin()', () => {
 
   test('should return the origin', async () => {
     const repo = await getOrigin();
-    expect(repo).toBe('github.com:otanriverdi/ismetjs.git');
+    expect(repo).toBe('otanriverdi/ismetjs');
   });
 
   test('should execute the correct shell command', () => {
@@ -24,14 +24,6 @@ describe('getOrigin()', () => {
     });
 
     await expect(getOrigin()).rejects.toBe('');
-  });
-
-  test('should throw if the origin is not a git link', async () => {
-    execaSpy.mockImplementation(() => ({stdout: 'test'} as any));
-
-    await expect(getOrigin()).rejects.toThrow(
-      "Couldn't retrieve the origin repo",
-    );
   });
 });
 
