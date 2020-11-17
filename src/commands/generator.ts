@@ -22,16 +22,16 @@ export default async function defaultCommand(): Promise<void> {
   }
 
   if (runtime.dry) {
-    const unique = Array.from(new Set([...comments]));
     //eslint-disable-next-line
-    console.table(unique);
-    helpers.exit(`Found ${unique.length} issues to be created`);
+    console.table(comments);
+    helpers.exit(`Found ${comments.length} issues as comments.`);
   }
 
   await helpers.load(async () => await authenticate(), 'Authenticating...');
 
+  const titles = comments.map(c => c.text);
   const {created, closed, opened} = await helpers.load(
-    async () => await generateIssues(comments, runtime.clean),
+    async () => await generateIssues(titles, runtime.clean),
     'Creating issues...',
   );
 

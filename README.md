@@ -70,12 +70,13 @@ ismet <directory>
 
 Running `ismet` pre-commit using a library like [husky](https://github.com/typicode/husky) is recommended.
 
-### Dry run
+### List
 
-If you want to see issues to be created before submitting them on Github:
+If you need to find a location of the commert or you want to see issues to be created before submitting them on Github, you can list all `ismet` comments in your project with:
 
 ```sh
-ismet --dry-run
+ismet --list
+ismet -l
 ```
 
 ### Logging out

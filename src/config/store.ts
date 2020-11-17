@@ -1,8 +1,7 @@
 import Conf from 'conf';
 
 /**
- * Handles the store created on users system using the `conf` package. The store property specific to the project
- * will have the cwd as the key.
+ * Handles the store created on users system using the `conf` package.
  */
 export default class Store {
   private conf = new Conf();

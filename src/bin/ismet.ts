@@ -41,8 +41,9 @@ const cli = meow(
         type: 'boolean',
         alias: 'v',
       },
-      dryRun: {
+      list: {
         type: 'boolean',
+        alias: 'l',
       },
     },
   },
@@ -56,7 +57,7 @@ const cli = meow(
   helpers.flag(cli, 'logout', () => (runtime.command = 'logout'));
   helpers.flag(cli, 'version', () => (runtime.command = 'version'));
   helpers.flag(cli, 'skipClean', () => (runtime.clean = false));
-  helpers.flag(cli, 'dryRun', () => (runtime.dry = true));
+  helpers.flag(cli, 'list', () => (runtime.dry = true));
 
   if (cli.input[0]) runtime.directory = cli.input[0];
   runtime.fullPath = path.join(process.cwd(), runtime.directory);
