@@ -24,6 +24,19 @@
 <br>
 <p align="center"><b>>_ A CLI tool to automatically generate and manage git repo issues from code comments.</b></p>
 
+## Overview
+
+```javascript
+// $(ismet) I'm going to become a Github issue!
+console.log('Hello, World!');
+```
+
+Ismet combines the ease of use of TODO comments with the practicality of Github issues. It manages your Github issues by parsing your project for `$(ismet)` comments and manages your issues accordingly. Instead of using TODO comments, use `$(ismet)` comments and Ismet will do the rest.
+
+Issues managed by Ismet will have the label `ismet`, so your existing issues won't be edited.
+
+It is recommended to run Ismet either in a pre-commit hook or in CI. See below for instructions on how to setup Ismet to run on CI.
+
 ## Installation
 
 ```sh
@@ -54,25 +67,21 @@ Create comments on your code using the `$(ismet)` directive.
 /* $(ismet) so is this */
 
 /**
- * You can also place the directive anywhere $(ismet)
+ * You can place the directive anywhere $(ismet)
  */
 ```
 
 **Currently, `ismet` only supports Github remotes.**
 
-To run `ismet` and create your issues:
+By default, `node_modules` and everything inside `.gitignore` is ignored automatically. To run `ismet` and create your issues. :
 
 ```sh
 ismet <directory>
 ```
 
-### Running pre-commit
-
-Running `ismet` pre-commit using a library like [husky](https://github.com/typicode/husky) is recommended.
-
 ### List
 
-If you need to find a location of the commert or you want to see issues to be created before submitting them on Github, you can list all `ismet` comments in your project with:
+If you need to find a location of a comment or you want to see issues to be created before submitting them on Github, you can list all `$(ismet)` comments in your project with:
 
 ```sh
 ismet --list
@@ -86,3 +95,7 @@ If you want to log out from `ismet`:
 ```sh
 ismet --logout
 ```
+
+### Running in CI
+
+Running `ismet` on CI requires a personal `GITHUB_TOKEN` to be set as an environment variable. Your token needs to have `repo` access.
