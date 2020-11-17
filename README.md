@@ -24,26 +24,46 @@
 <br>
 <p align="center"><b>>_ A CLI tool to automatically generate and manage git repo issues from code comments.</b></p>
 
-## Install
+## Installation
 
 ```sh
 npm install -g ismetjs
 ```
 
-## Usage
-
-**Currently, `ismet` only supports JavaScript files and Github repositories.**
-
-To run `ismet`:
+Verify your installation:
 
 ```sh
-ismet <directory>
+ismet --version
 ```
+
+## Usage
 
 To see all available commands:
 
 ```sh
 ismet --help
+```
+
+**Currently, `ismet` only supports JavaScript files.**
+
+Create comments on your code using the `$(ismet)` directive.
+
+```javascript
+// $(ismet) this is an ismet comment
+
+/* $(ismet) so is this */
+
+/**
+ * You can also place the directive anywhere $(ismet)
+ */
+```
+
+**Currently, `ismet` only supports Github remotes.**
+
+To run `ismet` and create your issues:
+
+```sh
+ismet <directory>
 ```
 
 ### Running pre-commit

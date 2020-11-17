@@ -9,7 +9,15 @@ export default class Store {
   private _token;
 
   constructor() {
-    this._token = this.conf.get(`access_token`) as string | undefined;
+    this._token =
+      process.env.GITHUB_TOKEN ||
+      (this.conf.get(`access_token`) as string | undefined);
+
+    if (process.env.CI && !process.env.GITHUB_TOKEN) {
+      throw new Error(
+        'The environment variable `GITHUB_TOKEN` is required in CI environment.',
+      );
+    }
   }
 
   public get token(): string | undefined {
