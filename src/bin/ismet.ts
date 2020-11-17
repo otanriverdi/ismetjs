@@ -1,11 +1,12 @@
 #! /usr/bin/env node
 // The above directive is mandatory for CLI entry points
 
-import {authenticate, logout} from 'auth';
+// This is the main entry point for the CLI tool.
+
+import * as commands from 'commands';
+import config from 'config';
 import * as helpers from 'helpers';
-import generateIssues from 'issues';
 import meow from 'meow';
-import parse from 'parser';
 import path from 'path';
 import * as validators from 'validators';
 
@@ -49,66 +50,32 @@ const cli = meow(
 
 // main entry point
 (async function () {
-  // Flags will be handled in the order they are called here
+  const {runtime} = config;
 
-  helpers.flag(cli, 'version', () => {
-    //eslint-disable-next-line
-    console.log(cli.pkg.version);
-    process.exit(0);
-  });
+  // flag handled latest gets the precedence
+  helpers.flag(cli, 'logout', () => (runtime.command = 'logout'));
+  helpers.flag(cli, 'version', () => (runtime.command = 'version'));
+  helpers.flag(cli, 'skipClean', () => (runtime.clean = false));
+  helpers.flag(cli, 'dryRun', () => (runtime.dry = true));
 
-  helpers.flag(cli, 'logout', () => {
-    logout();
-    helpers.exit('Logged out', 0);
-  });
+  if (cli.input[0]) runtime.directory = cli.input[0];
+  runtime.fullPath = path.join(process.cwd(), runtime.directory);
 
-  let clean = true;
-  helpers.flag(cli, 'skipClean', () => {
-    clean = false;
-  });
-
-  let dry = false;
-  helpers.flag(cli, 'dryRun', () => {
-    dry = true;
-  });
-
-  // ALL FLAGS MUST BE HANDLED BEFORE CALLING CHECK USAGE
+  // all flags must be handled before calling the validators
   validators.checkGit();
   validators.checkUsage(cli);
 
-  // Some flags may need to print before welcoming
+  // these are the commands that will run before the welcome message
+  if (runtime.command === 'version' || runtime.command === 'logout') {
+    return commands[runtime.command](cli);
+  }
+
   helpers.welcome();
 
-  // if no dir is passed as an input, we use the current directory
-  const directory = cli.input[0] || '.';
-  const fullPath = path.join(process.cwd(), directory);
+  // defaults to 'generator' if not modified by a flag or input.
+  // commands needs to be exported with the same name as they are configured
+  // in `runtime.command`
+  if (commands[runtime.command]) return commands[runtime.command]();
 
-  // getting comments before auth because we don't want to bother the user
-  // until we have issues to create
-  const comments = await helpers.load(
-    async () => await parse(fullPath),
-    `Parsing '${directory}' for issues...`,
-  );
-  if (!comments.length) {
-    helpers.exit(`Found no issues.`, 0);
-  }
-
-  if (dry) {
-    const unique = Array.from(new Set([...comments]));
-    //eslint-disable-next-line
-    console.table(unique);
-    helpers.exit(`Found ${unique.length} issues to be created`);
-  }
-
-  await helpers.load(async () => await authenticate(), 'Authenticating...');
-
-  const {created, closed, opened} = await helpers.load(
-    async () => await generateIssues(comments, clean),
-    'Creating issues...',
-  );
-
-  helpers.exit(
-    `Created ${created}, closed ${closed}, opened ${opened} issues.`,
-    0,
-  );
+  helpers.exit('Command not found.', 1);
 })();
