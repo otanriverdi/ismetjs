@@ -23,5 +23,6 @@ export default function parseJS(
     sourceType: 'module',
     ecmaVersion,
     onComment,
+    locations: true,
   });
 }

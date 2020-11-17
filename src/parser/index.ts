@@ -4,6 +4,7 @@ import parseGitignore from 'parse-gitignore';
 import path from 'path';
 import {promisify} from 'util';
 import parseComments from './parse';
+import {Comment} from './types';
 
 const readdir = promisify(fs.readdir);
 
@@ -16,7 +17,7 @@ const {acceptedExtensions} = config;
  * @param fullPath full path to directory to be parsed
  * @returns ismet comments
  */
-export default async function parse(fullPath: string): Promise<string[]> {
+export default async function parse(fullPath: string): Promise<Comment[]> {
   // get .gitignore
   const ignorePath = path.join(fullPath, './.gitignore');
   let ignored: string[] = ['node_modules'];
@@ -30,7 +31,7 @@ export default async function parse(fullPath: string): Promise<string[]> {
     encoding: 'utf-8',
   });
 
-  let comments: string[] = [];
+  let comments: Comment[] = [];
 
   for (const dirent of dirents) {
     if (ignored.includes(dirent)) {
@@ -50,7 +51,11 @@ export default async function parse(fullPath: string): Promise<string[]> {
     else if (acceptedExtensions.includes(dirent.split('.').slice(-1)[0])) {
       const data = fs.readFileSync(path.join(fullPath, dirent), 'utf-8');
 
-      const parsed = parseComments(data);
+      // the path relative to the directory that the tool was run will be
+      // passed to the parser to be able to keep track of comment locations
+      const relativePath = fullPath.replace(process.cwd(), '');
+
+      const parsed = parseComments(data, relativePath);
 
       comments = [...comments, ...parsed];
     }

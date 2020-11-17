@@ -1,5 +1,6 @@
 import config from 'config';
 import parseJS from './acorn';
+import {Comment} from './types';
 
 const {directive} = config;
 
@@ -10,11 +11,14 @@ const {directive} = config;
  * @param input javascript, jsx code as a string
  * @returns ismet comments
  */
-export default function parseComments(input: string): string[] {
-  const comments: string[] = [];
+export default function parseComments(
+  input: string,
+  relativePath: string,
+): Comment[] {
+  const comments: Comment[] = [];
 
   try {
-    parseJS(input, (block, text) => {
+    parseJS(input, (block, text, _, __, loc) => {
       if (text.includes(directive)) {
         // JSDoc style comment blocks is enforced by some editors and adds some unwanted characters
         // that needs to be replaced
@@ -23,9 +27,11 @@ export default function parseComments(input: string): string[] {
           text = text.replace(/\*/g, '');
         }
 
+        const location = relativePath + ':' + loc?.line + ':' + loc?.column;
+
         text = text.replace(directive, '');
 
-        comments.push(text.trim());
+        comments.push({text: text.trim(), location});
       }
     });
   } catch {
