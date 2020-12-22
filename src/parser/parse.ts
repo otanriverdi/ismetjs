@@ -16,14 +16,18 @@ export default function parseComments(
 
   try {
     parseJS(input, (block, text, _, __, loc) => {
-      if (text.includes('TODO') || text.includes('FIXME')) {
-        // JSDoc style comment blocks is enforced by some editors and adds some unwanted characters
-        // that needs to be replaced
-        if (block) {
-          text = text.replace(/\n/g, '');
-          text = text.replace(/\*/g, '');
-        }
+      // JSDoc style comment blocks is enforced by some editors and adds some unwanted characters
+      // that needs to be replaced
+      if (block) {
+        text = text.replace(/\n/g, '');
+        text = text.replace(/\*/g, '');
+      }
 
+      text = text.trim();
+
+      const first = text.split(' ')[0];
+
+      if (first === 'TODO' || first === 'FIXME') {
         let location = '';
         if (loc) {
           location = relativePath + ':' + loc.line + ':' + loc.column;
