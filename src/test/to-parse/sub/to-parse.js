@@ -1,12 +1,12 @@
-/*1 $(ismet)*/
+/* FIXME 1*/
 
 /**
- * 2 $(ismet)
+ *FIXME 2
  */
 
-//3 sentence $(ismet)
+// TODO 3 sentence
 
-// 4 $(ismet)
+//TODO 4
 
 // 5
 

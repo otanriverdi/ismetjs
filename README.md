@@ -22,22 +22,55 @@
 </p>
 
 <br>
-<p align="center"><b>>_ A CLI tool to automatically generate and manage git repo issues from code comments.</b></p>
+<p align="center"><b>>_ A CLI tool to automatically generate and manage git repository issues from TODO/FIXME comments.</b></p>
 
 ## Overview
 
 ```javascript
-// $(ismet) I'm going to become a Github issue!
+// TODO I'm going to become a Github issue!
 console.log('Hello, World!');
 ```
 
-Ismet combines the ease of use of TODO comments with the practicality of Github issues. It manages your Github issues by parsing your project for `$(ismet)` comments and manages your issues accordingly. Instead of using TODO comments, use `$(ismet)` comments and Ismet will do the rest.
+`ismet` is a project management tool for small to medium sized teams. It combines the ease of use of TODO comments with the practicality of Github issues. It creates and deletes Github issues by parsing your project for TODO/FIXME comments. TODO comments can be used as usual and `ismet` will handle the rest. No manual work needed!
 
-Issues managed by Ismet will have the label `ismet`, so your existing issues won't be edited.
+## Quick Start
 
-It is recommended to run Ismet either in a pre-commit hook or in CI. See below for instructions on how to setup Ismet to run on CI.
+Install `ismet` to your project:
+
+```sh
+npm install -save-dev ismetjs
+```
+
+Install [husky](https://github.com/typicode/husky/tree/master) to manage your git hooks:
+
+```sh
+npm install --save-dev husky
+```
+
+Add `ismet` to your `package.json` scripts:
+
+```
+"ismet": "ismet"
+```
+
+Add `ismet` to your post-commit hook inside the `package.json`:
+
+```json
+// package.json
+{
+  "husky": {
+    "hooks": {
+      "post-commit": "npm run ismet",
+    }
+  }
+}
+```
+
+**Now, use TODO/FIXME comments as you normally would and `ismet` will do the rest!**
 
 ## Installation
+
+### Install globally
 
 ```sh
 npm install -g ismetjs
@@ -49,6 +82,36 @@ Verify your installation:
 ismet --version
 ```
 
+### Install locally
+
+```sh
+npm install -D ismetjs
+```
+
+Add the script to your `package.json`:
+
+```
+"ismet": "ismet <directory>"
+```
+
+## Project Setup
+
+**It is recommended to run Ismet either in a post-commit hook or in CI.**
+
+### Configuring for CI
+
+Running `ismet` in CI requires a Github personal access token to be set as an environment variable called `GITHUB_TOKEN`. More information on how to create a personal access token can be found [here](https://docs.github.com/en/free-pro-team@latest/github/authenticating-to-github/creating-a-personal-access-token).
+
+**Your personal access token needs to have `repo` access.**
+
+With that, you can add the `ismet <directory>` command anywhere in your CI setup.
+
+### Configuring to run in a post-commit hook
+
+You can use a library like [husky](https://github.com/typicode/husky) to run `ismet` automatically post-commit. It is recommended to run it post-commit to have the latest updated code as the source.
+
+You can use the command `ismet <directory>` in your git hooks setup.
+
 ## Usage
 
 To see all available commands:
@@ -57,45 +120,41 @@ To see all available commands:
 ismet --help
 ```
 
-**Currently, `ismet` only supports JavaScript files.**
+### Allowing access
 
-Create comments on your code using the `$(ismet)` directive.
+`ismet` will start the login sequence using the Github OAuth API first time the command is run. Your token will be saved for later use.
 
-```javascript
-// $(ismet) this is an ismet comment
+If you don't want to login, you can use the `GITHUB_TOKEN` environment variable. See the **Configuring for CI** section to find out how to get a token.
 
-/* $(ismet) so is this */
+### Listing all comments
 
-/**
- * You can place the directive anywhere $(ismet)
- */
-```
-
-**Currently, `ismet` only supports Github remotes.**
-
-By default, `node_modules` and everything inside `.gitignore` is ignored automatically. To run `ismet` and create your issues. :
-
-```sh
-ismet <directory>
-```
-
-### List
-
-If you need to find a location of a comment or you want to see issues to be created before submitting them on Github, you can list all `$(ismet)` comments in your project with:
+You can use the list functionality to find the locations of comments to work on or if you want to see issues that will be created before submitting them on Github:
 
 ```sh
 ismet --list
 ismet -l
 ```
 
+### Issue generation
+
+Add `TODO` or `FIXME` commands to your code.
+
+```javascript
+// TODO this is an ismet comment
+
+/* FIXME so is this */
+```
+
+To run `ismet` and create your issues. By default, `node_modules` and everything inside `.gitignore` is ignored automatically:
+
+```sh
+ismet <directory>
+```
+
 ### Logging out
 
-If you want to log out from `ismet`:
+To log out from `ismet` and delete your access token:
 
 ```sh
 ismet --logout
 ```
-
-### Running in CI
-
-Running `ismet` on CI requires a personal `GITHUB_TOKEN` to be set as an environment variable. Your token needs to have `repo` access.

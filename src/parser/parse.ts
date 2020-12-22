@@ -1,8 +1,5 @@
-import config from 'config';
 import parseJS from './acorn';
 import {Comment} from './types';
-
-const {directive} = config;
 
 /**
  * Parses the provided JS input and returns all comments with an `ismet` directive.
@@ -19,20 +16,25 @@ export default function parseComments(
 
   try {
     parseJS(input, (block, text, _, __, loc) => {
-      if (text.includes(directive)) {
-        // JSDoc style comment blocks is enforced by some editors and adds some unwanted characters
-        // that needs to be replaced
-        if (block) {
-          text = text.replace(/\n/g, '');
-          text = text.replace(/\*/g, '');
-        }
+      // JSDoc style comment blocks is enforced by some editors and adds some unwanted characters
+      // that needs to be replaced
+      if (block) {
+        text = text.replace(/\n/g, '');
+        text = text.replace(/\*/g, '');
+      }
 
+      text = text.trim();
+
+      const first = text.split(' ')[0];
+
+      if (first === 'TODO' || first === 'FIXME') {
         let location = '';
         if (loc) {
           location = relativePath + ':' + loc.line + ':' + loc.column;
         }
 
-        text = text.replace(directive, '');
+        text = text.replace('TODO', '');
+        text = text.replace('FIXME', '');
 
         comments.push({text: text.trim(), location});
       }
