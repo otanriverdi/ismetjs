@@ -160,3 +160,9 @@ To log out from `ismet` and delete your access token:
 ```sh
 ismet --logout
 ```
+
+## WiP for 3.0
+
+- [ ] TypeScript support.
+- [ ] GitLab support.
+- [ ] CLI links to code.
