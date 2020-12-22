@@ -31,7 +31,9 @@
 console.log('Hello, World!');
 ```
 
-`ismet` is a project management tool for small to medium sized teams. It combines the ease of use of TODO comments with the practicality of Github issues. It creates and deletes Github issues by parsing your project for TODO/FIXME comments. TODO comments can be used as usual and `ismet` will handle the rest. No manual work needed!
+`ismet` is a project management tool for small to medium sized teams. It combines the ease of use of TODO comments with the practicality of Github issues.
+
+It creates and deletes Github issues by parsing your project for TODO/FIXME comments. TODO comments can be used as usual and `ismet` will handle the rest. Deleted comments will be removed from issues and duplicated comments will be stacked into a single issue automatically. No manual work needed!
 
 ## Quick Start
 
