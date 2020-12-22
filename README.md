@@ -165,4 +165,4 @@ ismet --logout
 
 - [ ] TypeScript support.
 - [ ] GitLab support.
-- [ ] CLI links to code.
+- [ ] Link to code in `list` output.
